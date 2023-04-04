@@ -165,6 +165,7 @@ export default {
     getData: function() {
 
       // test
+      /*
       this.user = 'Alcedo'
       this.userImg = 'https://th.bing.com/th/id/OIP.u6WXgiHIQyd_1d1ET3wJFQAAAA?w=149&h=150&c=7&r=0&o=5&dpr=1.3&pid=1.7'
       this.bot = 'Bing'
@@ -201,7 +202,7 @@ export default {
       this.group = '柴特寄批踢&meme'
       this.herf = 'http://47.242.61.68:3321/page/hbte3'
       this.time = '2023-04-04T06:20:28.628Z'
-
+      */
       axios
       .post(`${window.location.origin}/page`,{code: this.$route.params.code})
       .then(response => {
