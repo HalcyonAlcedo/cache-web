@@ -207,12 +207,16 @@ export default {
       .post(`${window.location.origin}/page`,{code: this.$route.params.code})
       .then(response => {
         this.user = response.data.user
+        this.userImg = response.data.userImg
         this.bot = response.data.bot
         this.question = Base64.decode(response.data.question)
         this.message = Base64.decode(response.data.message)
         this.quote = response.data.quote
+        this.images = response.data.images
+        this.suggest = response.data.suggest
         this.group = response.data.group
         this.herf = response.data.herf
+        this.time = response.data.time
       })
       .catch((error) => { // 请求失败处理
         console.log(error);
