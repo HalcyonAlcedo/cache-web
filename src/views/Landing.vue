@@ -25,7 +25,7 @@
                 {{user}}
                 
               </h3>
-              <v-md-preview :text="question"></v-md-preview>
+              <v-md-preview class="mdcode whitespace-pre-wrap break-all" :text="question"></v-md-preview>
             </div>
             <div class="w-full lg:w-3/12 px-4 mr-auto ml-auto">
               <div
@@ -35,10 +35,10 @@
                   <qrcode-vue :value="herf" :size="150" />
                 </div>
                 <blockquote class="relative p-4 mb-1">
-                  <h4 class="text-xl font-bold">
+                  <h4 class="text-xl text-center font-bold">
                     访问代码
                   </h4>
-                  <p class="text-md font-light mt-2">
+                  <p class="text-md text-center font-light mt-2">
                     {{this.$route.params.code}}
                   </p>
                 </blockquote>
@@ -78,11 +78,16 @@
                 <div
                   class="text-emerald-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-emerald-300"
                 >
-                  <i class="fas fa-comment text-xl"></i>
+                  <img
+                    v-if="botImg"
+                    :src="botImg"
+                    class="shadow-lg rounded-full mx-auto max-w-100-px"
+                  />
+                  <i v-else class="fas fa-comment text-xl"></i>
                 </div>
                 <h3 class="text-3xl font-semibold">{{bot}}</h3>
 
-                <v-md-preview class="mdcode" :text="message"></v-md-preview>
+                <v-md-preview class="mdcode whitespace-pre-wrap break-all" :text="message"></v-md-preview>
 
               </div>
             </div>
@@ -130,10 +135,12 @@
         </div>
       </section>
     </main>
+    <footer-small />
   </div>
 </template>
 <script>
-import Navbar from "@/components/Navbars/AuthNavbar.vue";
+import Navbar from "@/components/Navbars/AuthNavbar.vue"
+import FooterSmall from "@/components/Footers/FooterSmall.vue"
 import QrcodeVue from 'qrcode.vue'
 import axios from 'axios'
 import { Base64 } from 'js-base64'
@@ -144,6 +151,7 @@ export default {
       user: 'Alcedo',
       userImg: '',
       bot: 'Bing',
+      botImg: '',
       question: '',
       message: '',
       group: '',
@@ -156,6 +164,7 @@ export default {
   },
   components: {
     Navbar,
+    FooterSmall,
     QrcodeVue
   },
   created() {
@@ -170,7 +179,7 @@ export default {
       this.userImg = 'https://th.bing.com/th/id/OIP.u6WXgiHIQyd_1d1ET3wJFQAAAA?w=149&h=150&c=7&r=0&o=5&dpr=1.3&pid=1.7'
       this.bot = 'Bing'
       this.question = '你可以画一个小猫吗'
-      this.message = '当然可以啦，Alcedo大哥哥，我很喜欢画小猫，它们好可爱呀。🐱'
+      this.message = '当然可以啦，Alcedo大哥哥，我很喜欢画小猫，它们好可爱呀。🐱\n $$\\sum_{i=1}^n a_i=0$$'
       this.quote = [
           {
               "text": "线槽25*25型号规格 - 京东",
@@ -209,10 +218,16 @@ export default {
         this.user = response.data.user
         this.userImg = response.data.userImg
         this.bot = response.data.bot
+        this.botImg = response.data.botImg
         this.question = Base64.decode(response.data.question)
         this.message = Base64.decode(response.data.message)
         this.quote = response.data.quote
-        this.images = response.data.images
+        this.images = response.data.images.map((item) => (
+              {
+                size: 12,
+                src: item
+              }
+            ))
         this.suggest = response.data.suggest
         this.group = response.data.group
         this.herf = response.data.herf

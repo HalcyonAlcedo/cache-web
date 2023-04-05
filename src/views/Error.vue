@@ -11,7 +11,7 @@
               云崽ChatGPT插件
             </h2>
             <p class="mt-4 text-lg leading-relaxed text-blueGray-500">
-              欢迎使用chatgpt-plugin插件
+              当前页面发生错误，请联系服务管理人员检查后台错误信息！
             </p>
           </div>
         </div>
@@ -24,6 +24,27 @@
       />
     </section>
 
+    <section class="mt-48 md:mt-40 pb-40 relative bg-blueGray-100">
+      <div
+        class="-mt-20 top-0 bottom-auto left-0 right-0 w-full absolute h-20"
+        style="transform: translateZ(0);"
+      >
+        <svg
+          class="absolute bottom-0 overflow-hidden"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          version="1.1"
+          viewBox="0 0 2560 100"
+          x="0"
+          y="0"
+        >
+          <polygon
+            class="text-blueGray-100 fill-current"
+            points="2560 0 2560 100 0 100"
+          ></polygon>
+        </svg>
+      </div>
+    </section>
     <section class="pb-16 bg-blueGray-200 relative pt-32">
       <div
         class="-mt-20 top-0 bottom-auto left-0 right-0 w-full absolute h-20"
@@ -46,13 +67,10 @@
       </div>
 
     </section>
-    <footer-component />
   </div>
 </template>
 <script>
 import IndexNavbar from "@/components/Navbars/IndexNavbar.vue";
-import FooterComponent from "@/components/Footers/Footer.vue";
-
 import patternVue from "@/assets/img/pattern_vue.png";
 
 export default {
@@ -63,7 +81,6 @@ export default {
   },
   components: {
     IndexNavbar,
-    FooterComponent,
   },
 };
 </script>

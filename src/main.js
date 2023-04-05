@@ -31,6 +31,7 @@ import App from "@/App.vue";
 
 import Landing from "@/views/Landing.vue";
 import Help from "@/views/Help.vue";
+import ErrPage from "@/views/Error.vue";
 //import Profile from "@/views/Profile.vue";
 import Index from "@/views/Index.vue";
 
@@ -111,6 +112,10 @@ const routes = [
     ],
   },
   */
+  {
+    path: "/page/",
+    component: ErrPage,
+  },
   {
     path: "/page/:code",
     component: Landing,
