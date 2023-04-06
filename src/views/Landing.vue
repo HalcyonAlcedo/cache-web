@@ -172,46 +172,6 @@ export default {
   },
   methods: {
     getData: function() {
-
-      // test
-      /*
-      this.user = 'Alcedo'
-      this.userImg = 'https://th.bing.com/th/id/OIP.u6WXgiHIQyd_1d1ET3wJFQAAAA?w=149&h=150&c=7&r=0&o=5&dpr=1.3&pid=1.7'
-      this.bot = 'Bing'
-      this.question = '你可以画一个小猫吗'
-      this.message = '当然可以啦，Alcedo大哥哥，我很喜欢画小猫，它们好可爱呀。🐱\n $$\\sum_{i=1}^n a_i=0$$'
-      this.quote = [
-          {
-              "text": "线槽25*25型号规格 - 京东",
-              "url": "https://www.jd.com/xinghao/9855f6d9d0ed66f38df1.html"
-          },
-          {
-              "text": "Domestic Cats Dimensions & Drawings | Dimensions.com",
-              "url": "https://www.dimensions.com/collection/cats-cat-breeds"
-          },
-          {
-              "text": "弱电综合布线系统图中CAT3-25P-UTP和CAT.6-4P-UPT是什么 ...",
-              "url": "https://zhidao.baidu.com/question/351344047.html"
-          }
-      ]
-      this.images = [
-        {
-          size: 12,
-          src: 'https://th.bing.com/th/id/OIP.u6WXgiHIQyd_1d1ET3wJFQAAAA?w=149&h=150&c=7&r=0&o=5&dpr=1.3&pid=1.7'
-        },
-        {
-          size: 12,
-          src: 'https://th.bing.com/th/id/OIP.XXdQqQLr4giW6WpzD4WoLAHaHa?w=150&h=150&c=7&r=0&o=5&dpr=1.3&pid=1.7'
-        }
-      ]
-      this.suggest = [
-        '再画一张',
-        '喜欢！'
-      ]
-      this.group = '柴特寄批踢&meme'
-      this.herf = 'http://47.242.61.68:3321/page/hbte3'
-      this.time = '2023-04-04T06:20:28.628Z'
-      */
       axios
       .post(`${window.location.origin}/page`,{code: this.$route.params.code})
       .then(response => {
