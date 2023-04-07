@@ -34,13 +34,15 @@ import Help from "@/views/Help.vue";
 import ErrPage from "@/views/Error.vue";
 //import Profile from "@/views/Profile.vue";
 import Index from "@/views/Index.vue";
+// import Statistics from "@/views/Statistics.vue";
 
 // v-md-editor
 import VMdPreview from '@kangc/v-md-editor/lib/preview';
 import '@kangc/v-md-editor/lib/style/preview.css';
 
 import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
-import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
+//import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
+import "@/assets/styles/vuepress.css";
 
 import createEmojiPlugin from '@kangc/v-md-editor/lib/plugins/emoji/index';
 import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css'
@@ -134,6 +136,10 @@ const routes = [
     component: Help,
   },
   /*
+  {
+    path: "/statistics/",
+    component: Statistics,
+  },
   {
     path: "/profile",
     component: Profile,

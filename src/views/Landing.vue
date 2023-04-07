@@ -171,14 +171,6 @@ export default {
   },
   methods: {
     getData: function() {
-      this.message = `
-\`\`\`mermaid
-graph LR
-A --- B
-B-->C[fa:fa-ban forbidden]
-B-->D(fa:fa-spinner);
-\`\`\`
-      `
       axios
       .post(`${window.location.origin}/page`,{code: this.$route.params.code})
       .then(response => {

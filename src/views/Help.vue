@@ -2,9 +2,9 @@
   <div>
     <index-navbar />
     <section
-      class="header relative items-center flex h-screen max-h-860-px"
+      class="header relative flex"
     >
-      <div class="container mx-auto pt-48">
+      <div class="container md:md-40 mx-auto pt-20">
         <div class="w-full md:w-8/12 lg:w-6/12 xl:w-6/12 px-4">
             <h2 class="font-semibold text-4xl text-blueGray-600">
               使用帮助
@@ -133,7 +133,7 @@
               </div>
             </div>
           </div>
-
+          
         </div>
       </div>
     </section>
