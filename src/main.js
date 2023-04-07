@@ -52,22 +52,27 @@ import '@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css';
 
 import createKatexPlugin from '@kangc/v-md-editor/lib/plugins/katex/cdn';
 
+// mermaid
+import createMermaidPlugin from '@kangc/v-md-editor/lib/plugins/mermaid/cdn';
+import '@kangc/v-md-editor/lib/plugins/mermaid/mermaid.css';
+
+
 import Prism from 'prismjs';
-// 代码高亮
-// import 'prismjs/components/prism-json';
 
 // 选择使用主题
 VMdPreview.use(vuepressTheme, {
   Prism,
 });
 
-VMdPreview.use(createEmojiPlugin());
+VMdPreview.use(createEmojiPlugin())
 
-//VMdPreview.use(createLineNumbertPlugin());
+//VMdPreview.use(createLineNumbertPlugin())
 
-VMdPreview.use(createCopyCodePlugin());
+VMdPreview.use(createCopyCodePlugin())
 
-VMdPreview.use(createKatexPlugin());
+VMdPreview.use(createKatexPlugin())
+
+VMdPreview.use(createMermaidPlugin())
 
 // routes
 

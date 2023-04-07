@@ -49,6 +49,7 @@
     <footer-component />
   </div>
 </template>
+
 <script>
 import IndexNavbar from "@/components/Navbars/IndexNavbar.vue";
 import FooterComponent from "@/components/Footers/Footer.vue";
