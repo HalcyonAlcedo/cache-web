@@ -147,9 +147,9 @@ import { Base64 } from 'js-base64'
 export default {
   data() {
     return {
-      user: 'Alcedo',
+      user: '',
       userImg: '',
-      bot: 'Bing',
+      bot: '',
       botImg: '',
       question: '',
       message: '',
@@ -192,8 +192,8 @@ export default {
         this.herf = response.data.herf
         this.time = response.data.time
       })
-      .catch((error) => { // 请求失败处理
-        console.log(error);
+      .catch((err) => { // 请求失败处理
+        this.$router.push({path:'/page',query: {code: this.$route.params.code, error: err}})
       })
     }
   }

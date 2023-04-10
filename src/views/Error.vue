@@ -13,6 +13,12 @@
             <p class="mt-4 text-lg leading-relaxed text-blueGray-500">
               当前页面发生错误，请联系服务管理人员检查后台错误信息！
             </p>
+            <p class="mt-4 leading-relaxed text-blueGray-300">
+              页面代码：{{this.$route.query.code}}
+            </p>
+            <p class="mt-4 leading-relaxed text-blueGray-300">
+              {{this.$route.query.error}}
+            </p>
           </div>
         </div>
       </div>

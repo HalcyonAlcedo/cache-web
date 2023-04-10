@@ -4,17 +4,18 @@
   >
     <div class="rounded-t bg-white mb-0 px-6 py-6">
       <div class="text-center flex justify-between">
-        <h6 class="text-blueGray-700 text-xl font-bold">My account</h6>
+        <h6 class="text-blueGray-700 text-xl font-bold">系统设置</h6>
         <button
           class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
           type="button"
         >
-          Settings
+          保存
         </button>
       </div>
     </div>
     <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
       <form>
+<!--
         <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
           User Information
         </h6>
@@ -150,9 +151,9 @@
         </div>
 
         <hr class="mt-6 border-b-1 border-blueGray-300" />
-
+-->
         <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-          About Me
+          违禁内容核查
         </h6>
         <div class="flex flex-wrap">
           <div class="w-full lg:w-12/12 px-4">
@@ -161,17 +162,28 @@
                 class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                 htmlFor="grid-password"
               >
-                About me
+              输出黑名单
               </label>
               <textarea
+                v-model="chatConfig.blockWords"
                 type="text"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                rows="4"
               >
-                    A beautiful UI Kit and Admin for VueJS & Tailwind CSS. It is Free
-                    and Open Source.
-                  </textarea
+              </textarea>
+            </div>
+            <div class="relative w-full mb-3">
+              <label
+                class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                htmlFor="grid-password"
               >
+              输入黑名单
+              </label>
+              <textarea
+                v-model="chatConfig.promptBlockWords"
+                type="text"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+              >
+              </textarea>
             </div>
           </div>
         </div>
@@ -179,3 +191,48 @@
     </div>
   </div>
 </template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  data() {
+    return {
+      chatConfig: {
+        blockWords: '',
+        promptBlockWords: '',
+        
+      },
+    }
+  },
+  created() {
+    this.getData()
+  },
+  methods: {
+    getData: function() {
+      axios
+      .post(`${window.location.origin}/sysconfig`)
+      .then(response => {
+        if (response.data.err == '未登录') this.$router.push({path:'/auth/login'})
+        this.chatConfig.blockWords = response.data.blockWords.join(',')
+        this.chatConfig.promptBlockWords = response.data.promptBlockWords.join(',')
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    },
+    saveData: function() {
+      axios
+      .post(`${window.location.origin}/saveconfig`,{
+        chatConfig: this.chatConfig
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }
+  }
+};
+</script>
