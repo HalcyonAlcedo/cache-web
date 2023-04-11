@@ -6,6 +6,7 @@
       <div class="text-center flex justify-between">
         <h6 class="text-blueGray-700 text-xl font-bold">系统设置 <span class="text-xs font-semibold inline-block py-1 px-4 mx-4 uppercase rounded text-lightBlue-600 bg-lightBlue-200 uppercase last:mr-0 mr-1"> {{chatConfig.version}} </span></h6>
         <button
+          @click="saveData"
           class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
           type="button"
         >
@@ -368,7 +369,11 @@ export default {
         cacheEntry: false, //预制渲染服务器访问代码
       },
       redisConfig:{
-        bingTokens: []
+        bingTokens: [{
+          Token:'1BqIx7qrw9Oi0oG-Ux8HCRORIQWw3CpRCXtO7BiCNCfDElU-DYUUizZnkDR60r0pU5O2N0r3hyPa4oFakRU1dOp86_Z9lHItob2bFyW_dE2muVvI-bKzcM5JFgR71wwNXuFikcQ6qEWQ57SQUuHBXrO9zG4azfiESeuoLZKIIUwxvcJaO4YrKGp2i2IzwwRDwK30BKZAMJDRv8SMTugvtH',
+          State:'正常',
+          Usage: 100
+        }]
       },
       modeopenTab: 1
     }
