@@ -224,6 +224,11 @@
         <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
           必应Token管理
         </h6>
+        <div class="text-white px-6 py-4 border-0 rounded relative mb-4 bg-teal-500">
+          <span class="inline-block align-middle mr-8">
+            <b class="capitalize">注意</b> Token修改后不会即使生效，将在整体配置保存后生效！
+          </span>
+        </div>
         <div class="flex flex-wrap">
           <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-emerald-900 text-white">
             <div class="rounded-t mb-0 px-4 py-3 border-0">
@@ -235,6 +240,18 @@
                     Token管理面板
                   </h3>
                 </div>
+                <input
+                  v-model="newBingToken"
+                  type="text"
+                  class="text-blueGray-600 bg-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                />
+                <button
+                  @click="addToken"
+                  class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                  type="button"
+                >
+                  新增
+                </button>
               </div>
             </div>
             <div class="block w-full overflow-x-auto">
@@ -266,7 +283,7 @@
                     <td
                       class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                     >
-                      <token-dropdown v-model="item.Token" />
+                      <token-edit v-model="item.Token" />
                     </td>
                     <td
                       class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
@@ -296,7 +313,13 @@
                     <td
                       class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
                     >
-                      <!--<table-dropdown />-->
+                    <button
+                      @click="delToken(item.Token)"
+                      class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                      type="button"
+                    >
+                      删除
+                    </button>
                     </td>
                   </tr>
                 </tbody>
@@ -346,7 +369,7 @@
 </template>
 
 <script>
-import TokenDropdown from "@/components/Dropdowns/TokenDropdown.vue";
+import TokenEdit from "@/components/Dropdowns/TokenEdit.vue"
 import axios from 'axios'
 
 export default {
@@ -371,11 +394,12 @@ export default {
       redisConfig:{
         bingTokens: [{"Token":"1BqIx7qrw9Oi0oG-Ux8HCRORIQWw3CpRCXtO7BiCNCfDElU-DYUUizZnkDR60r0pU5O2N0r3hyPa4oFakRU1dOp86_Z9lHItob2bFyW_dE2muVvI-bKzcM5JFgR71wwNXuFikcQ6qEWQ57SQUuHBXrO9zG4azfiESeuoLZKIIUwxvcJaO4YrKGp2i2IzwwRDwK30BKZAMJDRv8SMTugvtHw","State":"正常","Usage":128},{"Token":"1oMI0sb-VyMs1WdJdoPTzxHMoeq1j3Ry5_4iwhM6fElBvaECApGqAEJHjp6wbUpT1KtWc39TULjpvlnzHCP3PkqdXnBjwXV8f0R8-g6SpLktZvwCDA1P3WjzowEvRT1laFk_GiqFqNs8OCwt8nVKk_64Eq6LRrgZn5fLg58s16yI5O4IEk3McvoTUZM2pveqTxv4erlAqYPNavCq9c6AQXA","State":"正常","Usage":127}]
       },
-      modeopenTab: 1
+      modeopenTab: 1,
+      newBingToken: '',
     }
   },
   components: {
-    TokenDropdown,
+    TokenEdit,
   },
   created() {
     this.getData()
@@ -406,6 +430,25 @@ export default {
       .catch((error) => {
         console.log(error);
       })
+    },
+    delToken: function(token) {
+      let index = this.redisConfig.bingTokens.findIndex(x => x.Token === token)
+      if (index !== -1) {
+        this.redisConfig.bingTokens.splice(index, 1)
+      }
+    },
+    addToken: function() {
+      let index = this.redisConfig.bingTokens.findIndex(x => x.Token === this.newBingToken)
+      if (index === -1) {
+        this.redisConfig.bingTokens.push(
+          {
+            Token: this.newBingToken,
+            State: '正常',
+            Usage: 0
+          }
+        )
+      }
+      this.newBingToken = ''
     },
     toggleTabs: function(mode, tabNumber) {
       this[mode] = tabNumber
