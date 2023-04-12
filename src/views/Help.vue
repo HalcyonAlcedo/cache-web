@@ -21,7 +21,7 @@
                   >
                   <i :class="item.icon"></i>
                   </div>
-                  <router-link :to="{path:`/help/:${item.title}`}">
+                  <router-link :to="`/help/${item.title}`">
                   <h6 class="text-xl mb-1 font-semibold">
                     {{ item.title }}
                     <span v-if="item.tip" class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-orange-600 bg-orange-200 uppercase last:mr-0 mr-1">
