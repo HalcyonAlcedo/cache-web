@@ -124,14 +124,14 @@
               <h3 class="text-3xl font-semibold">
                 <i :class="`${item.icon} text-xl`"></i>
                 {{ item.title }}
-                <span v-if="item.tip" class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-orange-600 bg-orange-200 uppercase last:mr-0 mr-1">
+                <span v-if="item.tip" class="text-xs font-semibold inline-block py-1 px-2 rounded text-orange-600 bg-orange-200 last:mr-0 mr-1">
                   {{item.tip}}
                 </span>
               </h3>
               <v-md-preview class="mt-4" :text="item.text"></v-md-preview>
 
               <div class="block pb-3">
-                <span v-for="order in item.list" :key="order" class="font-semibold inline-block py-1 px-2 uppercase rounded-full text-blueGray-500 bg-white uppercase last:mr-0 mr-2 mt-2"> {{order}} </span>
+                <span v-for="order in item.list" :key="order" class="font-semibold inline-block py-1 px-2 rounded-full text-blueGray-500 bg-white last:mr-0 mr-2 mt-2"> {{order}} </span>
               </div>
             </div>
           </div>
