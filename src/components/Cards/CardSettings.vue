@@ -266,7 +266,7 @@
                     <td
                       class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                     >
-                      <token-dropdown :token="item.Token" />
+                      <token-dropdown v-model="item.Token" />
                     </td>
                     <td
                       class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
@@ -369,11 +369,7 @@ export default {
         cacheEntry: false, //预制渲染服务器访问代码
       },
       redisConfig:{
-        bingTokens: [{
-          Token:'1BqIx7qrw9Oi0oG-Ux8HCRORIQWw3CpRCXtO7BiCNCfDElU-DYUUizZnkDR60r0pU5O2N0r3hyPa4oFakRU1dOp86_Z9lHItob2bFyW_dE2muVvI-bKzcM5JFgR71wwNXuFikcQ6qEWQ57SQUuHBXrO9zG4azfiESeuoLZKIIUwxvcJaO4YrKGp2i2IzwwRDwK30BKZAMJDRv8SMTugvtH',
-          State:'正常',
-          Usage: 100
-        }]
+        bingTokens: [{"Token":"1BqIx7qrw9Oi0oG-Ux8HCRORIQWw3CpRCXtO7BiCNCfDElU-DYUUizZnkDR60r0pU5O2N0r3hyPa4oFakRU1dOp86_Z9lHItob2bFyW_dE2muVvI-bKzcM5JFgR71wwNXuFikcQ6qEWQ57SQUuHBXrO9zG4azfiESeuoLZKIIUwxvcJaO4YrKGp2i2IzwwRDwK30BKZAMJDRv8SMTugvtHw","State":"正常","Usage":128},{"Token":"1oMI0sb-VyMs1WdJdoPTzxHMoeq1j3Ry5_4iwhM6fElBvaECApGqAEJHjp6wbUpT1KtWc39TULjpvlnzHCP3PkqdXnBjwXV8f0R8-g6SpLktZvwCDA1P3WjzowEvRT1laFk_GiqFqNs8OCwt8nVKk_64Eq6LRrgZn5fLg58s16yI5O4IEk3McvoTUZM2pveqTxv4erlAqYPNavCq9c6AQXA","State":"正常","Usage":127}]
       },
       modeopenTab: 1
     }
