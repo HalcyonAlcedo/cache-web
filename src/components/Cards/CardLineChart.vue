@@ -41,7 +41,7 @@ export default {
         let today = new Date()
         let filteredData = data.filter(item => {
           // 计算时间差，单位是毫秒
-          let diff = today - item.time;
+          let diff = today - new Date(item.time);
           // 转换成天数
           let days = diff / (1000 * 60 * 60 * 24)
           // 判断是否在7天以内
@@ -49,7 +49,7 @@ export default {
         })
         let groupedData = filteredData.reduce((acc, cur) => {
           // 获取日期字符串，格式是yyyy-mm-dd
-          let dateStr = cur.time.toISOString().slice(0,10)
+          let dateStr = cur.time
           // 如果累加器中没有这个日期的键，就初始化为0
           if (!acc[dateStr]) {
             acc[dateStr] = 0
@@ -172,7 +172,110 @@ export default {
       console.log(error);
     })
 
-
+    this.$nextTick(function () {
+        var config = {
+          type: "line",
+          data: {
+            labels: [
+              "周一",
+              "周二",
+              "周三",
+              "周四",
+              "周五",
+              "周六",
+              "周日",
+            ],
+            datasets: [
+              {
+                label: "Bing",
+                backgroundColor: "#4c51bf",
+                borderColor: "#4c51bf",
+                data: [0,0,0,0,0,0,0],
+                fill: false,
+              },
+              {
+                label: "ChatGPT",
+                fill: false,
+                backgroundColor: "#fff",
+                borderColor: "#fff",
+                data: [0,0,0,0,0,0,0],
+              }
+            ],
+          },
+          options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            title: {
+              display: false,
+              text: "Sales Charts",
+              fontColor: "white",
+            },
+            legend: {
+              labels: {
+                fontColor: "white",
+              },
+              align: "end",
+              position: "bottom",
+            },
+            tooltips: {
+              mode: "index",
+              intersect: false,
+            },
+            hover: {
+              mode: "nearest",
+              intersect: true,
+            },
+            scales: {
+              xAxes: [
+                {
+                  ticks: {
+                    fontColor: "rgba(255,255,255,.7)",
+                  },
+                  display: true,
+                  scaleLabel: {
+                    display: false,
+                    labelString: "Month",
+                    fontColor: "white",
+                  },
+                  gridLines: {
+                    display: false,
+                    borderDash: [2],
+                    borderDashOffset: [2],
+                    color: "rgba(33, 37, 41, 0.3)",
+                    zeroLineColor: "rgba(0, 0, 0, 0)",
+                    zeroLineBorderDash: [2],
+                    zeroLineBorderDashOffset: [2],
+                  },
+                },
+              ],
+              yAxes: [
+                {
+                  ticks: {
+                    fontColor: "rgba(255,255,255,.7)",
+                  },
+                  display: true,
+                  scaleLabel: {
+                    display: false,
+                    labelString: "Value",
+                    fontColor: "white",
+                  },
+                  gridLines: {
+                    borderDash: [3],
+                    borderDashOffset: [3],
+                    drawBorder: false,
+                    color: "rgba(255, 255, 255, 0.15)",
+                    zeroLineColor: "rgba(33, 37, 41, 0)",
+                    zeroLineBorderDash: [2],
+                    zeroLineBorderDashOffset: [2],
+                  },
+                },
+              ],
+            },
+          },
+        };
+        var ctx = document.getElementById("line-chart").getContext("2d");
+        window.myLine = new Chart(ctx, config);
+      });
   },
 };
 </script>
