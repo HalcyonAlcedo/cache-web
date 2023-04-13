@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto px-4 h-full">
     <div class="flex content-center items-center justify-center h-full">
-      <div class="w-full lg:w-4/12 px-4">
+      <div class="w-full lg:w-6/12 px-4">
         <div
           class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0"
         >
@@ -15,7 +15,10 @@
           </div>
           <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
             <div class="text-blueGray-400 text-center mb-3 font-bold">
-              <small>首次使用时请先私聊机器人 <span>#设置管理密码</span> 设置密码</small>
+              <small>首次使用时请先私聊机器人 <span>#设置(用户/管理)密码</span> 设置密码</small>
+            </div>
+            <div v-if="loginerr" class="text-red-400 text-center mb-3 font-bold">
+              <small>{{loginerr}}</small>
             </div>
             <form>
               <div class="relative w-full mb-3">
@@ -23,7 +26,7 @@
                   class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                   htmlFor="grid-password"
                 >
-                  机器人QQ号
+                  QQ号 (管理员请使用机器人qq号)
                 </label>
                 <input
                   v-model="qq"
@@ -66,26 +69,33 @@
 </template>
 <script>
 import axios from 'axios'
+import md5 from 'js-md5'
 
 export default {
   data() {
     return {
       qq: '',
       passwd: '',
+      loginerr: '',
     };
   },
   methods: {
     login: function() {
       axios
-      .post(`${window.location.origin}/login`,{qq: this.qq, passwd: this.passwd})
+      .post(`${window.location.origin}/login`,{qq: this.qq, passwd: md5(this.passwd)})
       .then(response => {
         if (response.data.login) {
           localStorage.setItem('token', response.headers['Set-Cookie'])
           this.$router.push({path:'/admin'})
+        } else {
+          this.qq = ''
+          this.passwd = ''
+          this.loginerr = response.data.err
         }
       })
       .catch((error) => {
-        console.log(error);
+        this.loginerr = error.message
+        console.log(error)
       })
     }
   },

@@ -44,6 +44,30 @@
                 帮助
               </a>
             </li>
+            <li>
+              <a
+                href="/admin/"
+                class="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
+              >
+                后台
+              </a>
+            </li>
+            <li>
+              <a
+                href="/admin/settings"
+                class="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
+              >
+                设置
+              </a>
+            </li>
+            <li>
+              <a
+                href="/auth/login"
+                class="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
+              >
+                更换账号
+              </a>
+            </li>
           </ul>
         </div>
       </div>
