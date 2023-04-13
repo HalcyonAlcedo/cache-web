@@ -49,7 +49,7 @@ export default {
         })
         let groupedData = filteredData.reduce((acc, cur) => {
           // 获取日期字符串，格式是yyyy-mm-dd
-          let dateStr = new Date(cur.time).getDay();
+          let dateStr = new Date(cur.time).getDay() - 1
           // 如果累加器中没有这个日期的键，就初始化为0
           if (!acc[dateStr]) {
             acc[dateStr] = 0

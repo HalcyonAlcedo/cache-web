@@ -13,6 +13,7 @@
           class="relative w-full px-4 max-w-full flex-grow flex-1 text-right"
         >
           <button
+            @click="cleanCache"
             class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
           >
@@ -82,7 +83,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      userData: ''
+      userData: []
     }
   },
   created() {
@@ -94,6 +95,13 @@ export default {
       .post(`${window.location.origin}/userData`)
       .then(response => {
         this.userData = response.data
+      })
+    },
+    cleanCache: function() {
+      axios
+      .post(`${window.location.origin}/cleanCache`)
+      .then(() => {
+        this.getData()
       })
     }
   },

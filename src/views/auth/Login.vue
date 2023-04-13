@@ -86,7 +86,7 @@ export default {
       .then(response => {
         if (response.data.login) {
           localStorage.setItem('token', response.headers['Set-Cookie'])
-          this.$router.push({path:'/admin'})
+          this.$router.push({path: response.data.autho === 'admin' ? '/admin/settings' : '/admin'})
         } else {
           this.qq = ''
           this.passwd = ''

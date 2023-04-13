@@ -453,6 +453,75 @@
                 />
               </div>
           </div>
+          <div class="w-full lg:w-6/12 px-4">
+            <div class="relative w-full mb-3">
+              <label
+                class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                htmlFor="grid-password"
+              >
+              合成emoji的API地址，默认谷歌厨房
+              </label>
+              <input
+                v-model="chatConfig.emojiBaseURL"
+                type="url"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+              />
+            </div>
+          </div>
+        </div>
+
+        <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+          服务超时配置
+        </h6>
+        <div class="flex flex-wrap">
+          <div class="w-full lg:w-3/12 px-4">
+              <div class="relative w-full mb-3">
+                <label
+                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                默认超时时间
+                </label>
+                <input
+                  v-model="chatConfig.defaultTimeoutMs"
+                  type="number"
+                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  min="0"
+                />
+              </div>
+          </div>
+          <div class="w-full lg:w-3/12 px-4">
+              <div class="relative w-full mb-3">
+                <label
+                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                浏览器超时时间
+                </label>
+                <input
+                  v-model="chatConfig.chromeTimeoutMS"
+                  type="number"
+                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  min="0"
+                />
+              </div>
+          </div>
+          <div class="w-full lg:w-3/12 px-4">
+              <div class="relative w-full mb-3">
+                <label
+                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                Sydney模式接受首条信息超时时间
+                </label>
+                <input
+                  v-model="chatConfig.sydneyFirstMessageTimeout"
+                  type="number"
+                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  min="0"
+                />
+              </div>
+          </div>
         </div>
 
         <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
@@ -637,6 +706,10 @@ export default {
         noiseScale: 0.6, //控制情感变化程度
         noiseScaleW: 0.668, //控制音素发音长度
         lengthScale: 1.2, //控制整体语速
+        defaultTimeoutMs: 120000,
+        chromeTimeoutMS: 120000,
+        sydneyFirstMessageTimeout: 40000,
+        emojiBaseURL: 'https://www.gstatic.com/android/keyboard/emojikitchen',
       },
       redisConfig:{
         bingTokens: [],
@@ -775,7 +848,7 @@ export default {
         this.chatConfig.promptBlockWords = response.data.chatConfig.promptBlockWords.join(',')
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error)
       })
     },
     saveData: function() {
@@ -785,10 +858,10 @@ export default {
         redisConfig: this.redisConfig
       })
       .then(response => {
-        console.log(response);
+        console.log(response)
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error)
       })
     },
     delToken: function(token) {
