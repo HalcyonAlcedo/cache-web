@@ -20,12 +20,11 @@
         >
           {{ title }}
         </label>
-        <select name="pets" v-model="selectData" @change="selectClass($event)" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-          <option v-if="default" :value="default">{{ default }}</option>
-          <option v-for="(options,id) in selectClassData" :key="id" :value="options.value || options">
-            {{options.label || options}}
-          </option>
-        </select>
+        <input
+            v-model="textData"
+            type="text"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          />
       </div>
   </div>
 </template>
@@ -43,16 +42,8 @@ export default {
       type:String
     },
     value:{
-      default: false,
+      default: 0,
       type:String
-    },
-    default:{
-      default: '',
-      type:String
-    },
-    selectClassData:{
-      default: [],
-      type:Array
     }
   },
   data() {
@@ -61,7 +52,7 @@ export default {
     }
   },
   computed: {
-    selectData: {
+    textData: {
       get: function() {
         return this.value
       },
@@ -71,9 +62,6 @@ export default {
     }
   },
   methods: {
-    selectClass(event){
-      this.selectData = event.target.value
-    },
     toggleTooltip: function(){
       if(this.tooltipShow){
         this.tooltipShow = false;
