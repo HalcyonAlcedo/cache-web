@@ -5,6 +5,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import CardSettings from "@/components/Cards/CardSettings.vue";
 

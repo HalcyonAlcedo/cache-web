@@ -21,101 +21,12 @@
           通用设置
         </h6>
         <div class="flex flex-wrap">
-          <div class="w-full lg:w-3/12 px-4">
-              <div class="relative w-full mb-3">
-                <label
-                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  图片识别OCR
-                </label>
-                <input
-                    v-model="chatConfig.imgOcr"
-                    type="checkbox"
-                    class="form-checkbox border-0 rounded text-gray-800 bg-blueGray-600 ml-1 w-5 h-5"
-                    style="transition: all 0.15s ease 0s;"
-                  />
-              </div>
-          </div>
-          <div class="w-full lg:w-3/12 px-4">
-              <div class="relative w-full mb-3">
-                <label
-                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                允许其他模式
-                </label>
-                <input
-                    v-model="chatConfig.allowOtherMode"
-                    type="checkbox"
-                    class="form-checkbox border-0 rounded text-gray-800 bg-blueGray-600 ml-1 w-5 h-5"
-                    style="transition: all 0.15s ease 0s;"
-                  />
-              </div>
-          </div>
-          <div class="w-full lg:w-3/12 px-4">
-              <div class="relative w-full mb-3">
-                <label
-                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                调试信息
-                </label>
-                <input
-                    v-model="chatConfig.debug"
-                    type="checkbox"
-                    class="form-checkbox border-0 rounded text-gray-800 bg-blueGray-600 ml-1 w-5 h-5"
-                    style="transition: all 0.15s ease 0s;"
-                  />
-              </div>
-          </div>
-          <div class="w-full lg:w-3/12 px-4">
-              <div class="relative w-full mb-3">
-                <label
-                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                回复确认
-                </label>
-                <input
-                    v-model="redisConfig.turnConfirm"
-                    type="checkbox"
-                    class="form-checkbox border-0 rounded text-gray-800 bg-blueGray-600 ml-1 w-5 h-5"
-                    style="transition: all 0.15s ease 0s;"
-                  />
-              </div>
-          </div>
-          <div class="w-full lg:w-3/12 px-4">
-              <div class="relative w-full mb-3">
-                <label
-                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  对话保留时长
-                </label>
-                <input
-                  v-model="chatConfig.conversationPreserveTime"
-                  type="number"
-                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  min="0"
-                />
-              </div>
-          </div>
-          <div class="w-full lg:w-6/12 px-4">
-            <div class="relative w-full mb-3">
-              <label
-                class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-              代理服务器地址
-              </label>
-              <input
-                v-model="chatConfig.proxy"
-                type="url"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-              />
-            </div>
-          </div>
+          <stting-check title="图片识别OCR" subTitle="可识别聊天消息中图片的文字内容" v-model:value="chatConfig.imgOcr" />
+          <stting-check title="允许其他模式" subTitle="开启后，则允许用户使用#chat1/#chat3/#chatglm/#bing等命令无视全局模式进行聊天" v-model:value="chatConfig.allowOtherMode" />
+          <stting-check title="调试信息" subTitle="将输出更多调试信息，如果不希望控制台刷屏的话，可以关闭" v-model:value="chatConfig.debug" />
+          <stting-check title="回复确认" subTitle="机器人在收到消息后会首先回复一条正在思考的消息，如果不需要回复可关闭" v-model:value="chatConfig.turnConfirm" />
+          <stting-number title="对话保留时长" subTitle="每个人发起的对话保留时长。超过这个时长没有进行对话，再进行对话将开启新的对话。" min="0" v-model:value="chatConfig.conversationPreserveTime" />
+          <stting-url title="代理服务器地址" subTitle="数据通过代理服务器发送，http或socks5代理。配置后需重启。" v-model:value="chatConfig.proxy" />
         </div>
 
         <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
@@ -146,269 +57,32 @@
                   <div v-bind:class="{'hidden': modeopenTab !== 1, 'block': modeopenTab === 1}">
                     <!-- 文本模式 -->
                     <div class="flex flex-wrap">
-                      <div class="w-full lg:w-3/12 px-4">
-                        <div class="relative w-full mb-3">
-                          <label
-                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                          >
-                            自动转图片阈值
-                          </label>
-                          <input
-                            v-model="chatConfig.autoUsePictureThreshold"
-                            type="number"
-                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            min="0"
-                          />
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-3/12 px-4">
-                        <div class="relative w-full mb-3">
-                          <label
-                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                          >
-                            长文本自动转图片
-                          </label>
-                          <input
-                              v-model="chatConfig.autoUsePicture"
-                              type="checkbox"
-                              class="form-checkbox border-0 rounded text-gray-800 bg-blueGray-600 ml-1 w-5 h-5"
-                              style="transition: all 0.15s ease 0s;"
-                            />
-                        </div>
-                      </div>
+                      <stting-number title="自动转图片阈值" subTitle="自动转图片的字数阈值,长文本自动转图片开启后才生效" min="0" v-model:value="chatConfig.autoUsePictureThreshold" />
+                      <stting-check title="长文本自动转图片" subTitle="字数大于阈值会自动用图片发送，即使是文本模式" v-model:value="chatConfig.autoUsePicture" />
                     </div>
                   </div>
                   <div v-bind:class="{'hidden': modeopenTab !== 2, 'block': modeopenTab === 2}">
                     <!-- 图片模式 -->
                     <div class="flex flex-wrap">
-                      <div class="w-full lg:w-3/12 px-4">
-                        <div class="relative w-full mb-3">
-                          <label
-                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                          >
-                          全局图片模式
-                          </label>
-                          <input
-                              v-model="chatConfig.defaultUsePicture"
-                              type="checkbox"
-                              class="form-checkbox border-0 rounded text-gray-800 bg-blueGray-600 ml-1 w-5 h-5"
-                              style="transition: all 0.15s ease 0s;"
-                            />
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-3/12 px-4">
-                        <div class="relative w-full mb-3">
-                          <label
-                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                          >
-                          图片引用消息
-                          </label>
-                          <input
-                              v-model="chatConfig.quoteReply"
-                              type="checkbox"
-                              class="form-checkbox border-0 rounded text-gray-800 bg-blueGray-600 ml-1 w-5 h-5"
-                              style="transition: all 0.15s ease 0s;"
-                            />
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-3/12 px-4">
-                        <div class="relative w-full mb-3">
-                          <label
-                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                          >
-                          启用二维码
-                          </label>
-                          <input
-                              v-model="chatConfig.showQRCode"
-                              type="checkbox"
-                              class="form-checkbox border-0 rounded text-gray-800 bg-blueGray-600 ml-1 w-5 h-5"
-                              style="transition: all 0.15s ease 0s;"
-                            />
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-3/12 px-4">
-                        <div class="relative w-full mb-3">
-                          <label
-                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                          >
-                          预制渲染服务器访问代码
-                          </label>
-                          <input
-                              v-model="chatConfig.cacheEntry"
-                              type="checkbox"
-                              class="form-checkbox border-0 rounded text-gray-800 bg-blueGray-600 ml-1 w-5 h-5"
-                              style="transition: all 0.15s ease 0s;"
-                            />
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-6/12 px-4">
-                        <div class="relative w-full mb-3">
-                          <label
-                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                          >
-                          渲染服务器地址
-                          </label>
-                          <input
-                            v-model="chatConfig.cacheUrl"
-                            type="url"
-                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          />
-                        </div>
-                      </div>
+                      <stting-check title="全局图片模式" subTitle="全局默认以图片形式回复" v-model:value="chatConfig.defaultUsePicture" />
+                      <stting-check title="图片引用消息" subTitle="在回复图片时引用原始消息" v-model:value="chatConfig.quoteReply" />
+                      <stting-check title="启用二维码" subTitle="在图片模式中启用二维码。二维码会包含当前缓存浏览器访问链接，如果未设置反代和cdn将会暴露服务器ip，如不想显示可关闭。" v-model:value="chatConfig.showQRCode" />
+                      <stting-check title="预制渲染服务器访问代码" subTitle="图片内容渲染服务器开启预制访问代码，当渲染服务器访问较慢时可以开启,但无法保证访问代码可以正常访问页面" v-model:value="chatConfig.cacheEntry" />
+                      <stting-url title="渲染服务器地址" subTitle="可选择第三方渲染服务器" v-model:value="chatConfig.cacheUrl" />
                     </div>
                   </div>
                   <div v-bind:class="{'hidden': modeopenTab !== 3, 'block': modeopenTab === 3}">
                     <!-- 语音模式 -->
                     <div class="flex flex-wrap">
-                      <div class="w-full lg:w-3/12 px-4">
-                        <div class="relative w-full mb-3">
-                          <label
-                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                          >
-                          全局语音模式
-                          </label>
-                          <input
-                              v-model="chatConfig.defaultUseTTS"
-                              type="checkbox"
-                              class="form-checkbox border-0 rounded text-gray-800 bg-blueGray-600 ml-1 w-5 h-5"
-                              style="transition: all 0.15s ease 0s;"
-                            />
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-3/12 px-4">
-                        <div class="relative w-full mb-3">
-                          <label
-                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                          >
-                          语音同时发送文字
-                          </label>
-                          <input
-                              v-model="chatConfig.alsoSendText"
-                              type="checkbox"
-                              class="form-checkbox border-0 rounded text-gray-800 bg-blueGray-600 ml-1 w-5 h-5"
-                              style="transition: all 0.15s ease 0s;"
-                            />
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-3/12 px-4">
-                        <div class="relative w-full mb-3">
-                          <label
-                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                          >
-                          语音转文字阈值
-                          </label>
-                          <input
-                            v-model="chatConfig.ttsAutoFallbackThreshold"
-                            type="number"
-                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            min="0" max="299"
-                          />
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-3/12 px-4">
-                        <div class="relative w-full mb-3">
-                          <label
-                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                          >
-                          语音模式默认角色
-                          </label>
-                          <select name="pets" v-model="chatConfig.defaultTTSRole" @change="selectClass('defaultTTSRole',$event)" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                            <option value="随机">随机</option>
-                            <option v-for="(options,id) in defaultTTSRole_selectClassData" :key="id" :value="options">
-                              {{options}}
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-6/12 px-4">
-                        <div class="relative w-full mb-3">
-                          <label
-                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                          >
-                          语音转换API地址
-                          </label>
-                          <input
-                            v-model="chatConfig.ttsSpace"
-                            type="url"
-                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          />
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-6/12 px-4">
-                        <div class="relative w-full mb-3">
-                          <label
-                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                          >
-                          语音转换huggingface反代
-                          </label>
-                          <input
-                            v-model="chatConfig.huggingFaceReverseProxy"
-                            type="url"
-                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          />
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-3/12 px-4">
-                        <div class="relative w-full mb-3">
-                          <label
-                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                          >
-                          控制情感变化程度
-                          </label>
-                          <input
-                            v-model="chatConfig.noiseScale"
-                            type="number"
-                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            min="0" max="1"
-                          />
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-3/12 px-4">
-                        <div class="relative w-full mb-3">
-                          <label
-                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                          >
-                          控制音素发音长度
-                          </label>
-                          <input
-                            v-model="chatConfig.noiseScaleW"
-                            type="number"
-                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            min="0" max="1"
-                          />
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-3/12 px-4">
-                        <div class="relative w-full mb-3">
-                          <label
-                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                            htmlFor="grid-password"
-                          >
-                          控制整体语速
-                          </label>
-                          <input
-                            v-model="chatConfig.lengthScale"
-                            type="number"
-                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            min="0" max="2"
-                          />
-                        </div>
-                      </div>
+                      <stting-check title="全局语音模式" subTitle="全局默认以语音形式回复，使用默认角色音色" v-model:value="chatConfig.defaultUseTTS" />
+                      <stting-check title="语音同时发送文字" subTitle="语音模式下，同时发送文字版，避免音质较低听不懂" v-model:value="chatConfig.alsoSendText" />
+                      <stting-number title="语音转文字阈值" subTitle="语音模式下，字数超过这个阈值就降级为文字" min="0" max="299" v-model:value="chatConfig.autoUsePictureThreshold" />
+                      <stting-select title="语音模式默认角色" subTitle="语音模式下，未指定角色时使用的角色。若留空，将使用随机角色回复。若用户通过指令指定了角色，将忽略本设定" default="随机" :selectClassData="defaultTTSRole_selectClassData" v-model:value="chatConfig.defaultTTSRole" />
+                      <stting-url title="语音转换API地址" subTitle="前往duplicate空间https://huggingface.co/spaces/ikechan8370/vits-uma-genshin-honkai后查看api地址" v-model:value="chatConfig.ttsSpace" />
+                      <stting-url title="语音转换huggingface反代" v-model:value="chatConfig.huggingFaceReverseProxy" />
+                      <stting-number title="控制情感变化程度" min="0" max="1" v-model:value="chatConfig.noiseScale" />
+                      <stting-number title="控制音素发音长度" min="0" max="1" v-model:value="chatConfig.noiseScaleW" />
+                      <stting-number title="控制整体语速" min="0" max="2" v-model:value="chatConfig.lengthScale" />
                     </div>
                   </div>
                 </div>
@@ -421,107 +95,18 @@
           绘图设置
         </h6>
         <div class="flex flex-wrap">
-          <div class="w-full lg:w-3/12 px-4">
-              <div class="relative w-full mb-3">
-                <label
-                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                绘图功能开关
-                </label>
-                <input
-                    v-model="chatConfig.enableDraw"
-                    type="checkbox"
-                    class="form-checkbox border-0 rounded text-gray-800 bg-blueGray-600 ml-1 w-5 h-5"
-                    style="transition: all 0.15s ease 0s;"
-                  />
-              </div>
-          </div>
-          <div class="w-full lg:w-3/12 px-4">
-              <div class="relative w-full mb-3">
-                <label
-                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                绘图CD
-                </label>
-                <input
-                  v-model="chatConfig.drawCD"
-                  type="number"
-                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  min="0"
-                />
-              </div>
-          </div>
-          <div class="w-full lg:w-6/12 px-4">
-            <div class="relative w-full mb-3">
-              <label
-                class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-              合成emoji的API地址，默认谷歌厨房
-              </label>
-              <input
-                v-model="chatConfig.emojiBaseURL"
-                type="url"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-              />
-            </div>
-          </div>
+          <stting-check title="绘图功能开关" v-model:value="chatConfig.enableDraw" />
+          <stting-number title="绘图CD" subTitle="绘图指令的CD时间，主人不受限制" min="0" v-model:value="chatConfig.drawCD" />
+          <stting-url title="emojiAPI地址" subTitle="合成emoji的API地址，默认谷歌厨房" v-model:value="chatConfig.emojiBaseURL" />
         </div>
 
         <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
           服务超时配置
         </h6>
         <div class="flex flex-wrap">
-          <div class="w-full lg:w-3/12 px-4">
-              <div class="relative w-full mb-3">
-                <label
-                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                默认超时时间
-                </label>
-                <input
-                  v-model="chatConfig.defaultTimeoutMs"
-                  type="number"
-                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  min="0"
-                />
-              </div>
-          </div>
-          <div class="w-full lg:w-3/12 px-4">
-              <div class="relative w-full mb-3">
-                <label
-                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                浏览器超时时间
-                </label>
-                <input
-                  v-model="chatConfig.chromeTimeoutMS"
-                  type="number"
-                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  min="0"
-                />
-              </div>
-          </div>
-          <div class="w-full lg:w-3/12 px-4">
-              <div class="relative w-full mb-3">
-                <label
-                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                Sydney模式接受首条信息超时时间
-                </label>
-                <input
-                  v-model="chatConfig.sydneyFirstMessageTimeout"
-                  type="number"
-                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  min="0"
-                />
-              </div>
-          </div>
+          <stting-number title="默认超时时间" subTitle="各个地方的默认超时时间" min="0" v-model:value="chatConfig.defaultTimeoutMs" />
+          <stting-number title="浏览器超时时间" subTitle="浏览器默认超时，浏览器可能需要更高的超时时间" min="0" v-model:value="chatConfig.chromeTimeoutMS" />
+          <stting-number title="Sydney模式接受首条信息超时时间" subTitle="超过该时间阈值未收到Bing的任何消息，则断开本次连接并重试（最多重试3次，失败后将返回timeout waiting for first message）" min="15000" v-model:value="chatConfig.sydneyFirstMessageTimeout" />
         </div>
 
         <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
@@ -636,34 +221,8 @@
         </h6>
         <div class="flex flex-wrap">
           <div class="w-full lg:w-12/12 px-4">
-            <div class="relative w-full mb-3">
-              <label
-                class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-              输出黑名单
-              </label>
-              <textarea
-                v-model="chatConfig.blockWords"
-                type="text"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-              >
-              </textarea>
-            </div>
-            <div class="relative w-full mb-3">
-              <label
-                class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-              输入黑名单
-              </label>
-              <textarea
-                v-model="chatConfig.promptBlockWords"
-                type="text"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-              >
-              </textarea>
-            </div>
+            <stting-textarea title="输出黑名单" subTitle="检查输出结果中是否有违禁词，如果存在黑名单中的违禁词则不输出。英文逗号隔开" v-model:value="chatConfig.blockWords" />
+            <stting-textarea title="输入黑名单" subTitle="检查输入结果中是否有违禁词，如果存在黑名单中的违禁词则不输出。英文逗号隔开" v-model:value="chatConfig.promptBlockWords" />
           </div>
         </div>
       </form>
@@ -673,6 +232,12 @@
 
 <script>
 import TokenEdit from "@/components/Dropdowns/TokenEdit.vue"
+import SttingCheck from "@/components/Settings/Check.vue"
+import SttingNumber from "@/components/Settings/Number.vue"
+import SttingUrl from "@/components/Settings/Url.vue"
+import SttingSelect from "@/components/Settings/Select.vue"
+import SttingTextarea from "@/components/Settings/Textarea.vue"
+
 import axios from 'axios'
 
 export default {
@@ -832,6 +397,11 @@ export default {
   },
   components: {
     TokenEdit,
+    SttingCheck,
+    SttingNumber,
+    SttingUrl,
+    SttingSelect,
+    SttingTextarea,
   },
   created() {
     this.getData()
