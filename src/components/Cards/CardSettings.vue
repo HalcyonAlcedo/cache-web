@@ -154,6 +154,13 @@
                   ChatGLM
                 </a>
               </li>
+              <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
+                  v-on:click="toggleTabs('modeopenTab', 6)"
+                  v-bind:class="{ 'text-gray-500 bg-white': modeopenTab !== 6, 'bg-purple-200': modeopenTab === 6 }">
+                  Slack Claude
+                </a>
+              </li>
             </ul>
             <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
               <div class="px-4 py-5 flex-auto">
@@ -242,6 +249,17 @@
                     <div class="flex flex-wrap">
                       <stting-url title="ChatGLM API地址" subTitle="如 http://localhost:8080"
                         v-model:value="chatConfig.chatglmBaseUrl" />
+                    </div>
+                  </div>
+                  <div v-bind:class="{ 'hidden': modeopenTab !== 6, 'block': modeopenTab === 6 }">
+                    <!-- Slack Claude -->
+                    <div class="flex flex-wrap">
+                      <stting-passwd title="Slack用户Token" subTitle="slackUserToken，在OAuth&Permissions页面获取。需要具有channels:history, chat:write, groups:history, im:history, mpim:history 这几个scope" v-model:value="chatConfig.slackUserToken" />
+                      <stting-passwd title="Slack Bot Token" subTitle="slackBotUserToken，在OAuth&Permissions页面获取。需要channels:history，groups:history，im:history 这几个scope" v-model:value="chatConfig.slackBotUserToken" />
+                      <stting-text title="Slack私聊频道号"
+                        subTitle="在Slack中与Claude机器人私聊的频道号。如果页面URL为https://app.slack.com/client/TXXXXXXXX/DXXXXXXXXX/，则频道号就是DXXXXXXXXX"
+                        v-model:value="chatConfig.slackChannelId" />
+                      <stting-passwd title="Slack签名密钥" subTitle="Signing Secret。在Basic Information页面获取" v-model:value="chatConfig.slackSigningSecret" />
                     </div>
                   </div>
                 </div>
@@ -489,6 +507,12 @@ export default {
         viewHost: '', //渲染服务器地址
         chatViewWidth: 1280, //图片渲染宽度
         chatViewBotName: '', //Bot命名
+        
+  slackUserToken: '',
+  slackBotUserToken: '',
+  slackChannelId: '',
+  slackSigningSecret: '',
+
       },
       redisConfig: {
         bingTokens: [],
