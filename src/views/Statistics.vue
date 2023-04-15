@@ -33,7 +33,6 @@ import AdminNavbar from "@/components/Navbars/AdminNavbar.vue";
 import HeaderStats from "@/components/Headers/HeaderStats.vue";
 import FooterAdmin from "@/components/Footers/FooterAdmin.vue";
 import CardLineChart from "@/components/Cards/CardLineChart.vue";
-import CardBarChart from "@/components/Cards/CardBarChart.vue";
 import CardPageVisits from "@/components/Cards/CardPageVisits.vue";
 import CardSocialTraffic from "@/components/Cards/CardSocialTraffic.vue";
 export default {
@@ -43,7 +42,6 @@ export default {
     HeaderStats,
     FooterAdmin,
     CardLineChart,
-    CardBarChart,
     CardPageVisits,
     CardSocialTraffic,
   },
