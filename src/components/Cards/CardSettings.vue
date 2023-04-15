@@ -214,7 +214,7 @@
                     <!-- API3 -->
                     <div class="flex flex-wrap">
                       <stting-url title="ChatGPT API反代服务器地址" subTitle="ChatGPT的API反代服务器，用于绕过Cloudflare访问ChatGPT API"
-                        v-model:value="chatConfig.defaultChatGPTAPI" />
+                        v-model:value="chatConfig.api" />
                       <stting-url title="apiBaseUrl地址" v-model:value="chatConfig.apiBaseUrl" />
                       <stting-check title="强制使用ChatGPT反代" subTitle="即使配置了proxy，依然使用ChatGPT反代"
                         v-model:value="chatConfig.apiForceUseReverse" />
