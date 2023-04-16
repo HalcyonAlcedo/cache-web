@@ -94,7 +94,7 @@ export default {
       axios
       .post(`${window.location.origin}/userData`)
       .then(response => {
-        this.userData = response.data
+        this.userData = response.data.chat
       })
     },
     cleanCache: function() {

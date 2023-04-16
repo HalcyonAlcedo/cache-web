@@ -256,9 +256,9 @@
                     <div class="flex flex-wrap">
                       <stting-passwd title="Slack用户Token" subTitle="slackUserToken，在OAuth&Permissions页面获取。需要具有channels:history, chat:write, groups:history, im:history, mpim:history 这几个scope" v-model:value="chatConfig.slackUserToken" />
                       <stting-passwd title="Slack Bot Token" subTitle="slackBotUserToken，在OAuth&Permissions页面获取。需要channels:history，groups:history，im:history 这几个scope" v-model:value="chatConfig.slackBotUserToken" />
-                      <stting-text title="Slack私聊频道号"
-                        subTitle="在Slack中与Claude机器人私聊的频道号。如果页面URL为https://app.slack.com/client/TXXXXXXXX/DXXXXXXXXX/，则频道号就是DXXXXXXXXX"
-                        v-model:value="chatConfig.slackChannelId" />
+                      <stting-text title="Slack成员id"
+                        subTitle="在Slack中点击Claude头像查看详情，其中的成员ID复制过来"
+                        v-model:value="chatConfig.slackClaudeUserId" />
                       <stting-passwd title="Slack签名密钥" subTitle="Signing Secret。在Basic Information页面获取" v-model:value="chatConfig.slackSigningSecret" />
                     </div>
                   </div>
@@ -507,12 +507,10 @@ export default {
         viewHost: '', //渲染服务器地址
         chatViewWidth: 1280, //图片渲染宽度
         chatViewBotName: '', //Bot命名
-        
-  slackUserToken: '',
-  slackBotUserToken: '',
-  slackChannelId: '',
-  slackSigningSecret: '',
-
+        slackUserToken: '', //Slack用户Token
+        slackBotUserToken: '', //Slack Bot Token
+        slackClaudeUserId: '', //Slack成员id
+        slackSigningSecret: '', //slackSigningSecret
       },
       redisConfig: {
         bingTokens: [],

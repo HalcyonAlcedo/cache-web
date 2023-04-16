@@ -76,22 +76,12 @@
                   />
                 </div>
             </div>
-            <div class="w-full lg:w-3/12 px-4">
-              <div class="relative w-full mb-3">
-                <label
-                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                语音模式默认角色
-                </label>
-                <select name="pets" v-model="userSetting.ttsRole" @change="selectClass('ttsRole',$event)" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                  <option value="随机">随机</option>
-                  <option v-for="(options,id) in defaultTTSRole_selectClassData" :key="id" :value="options">
-                    {{options}}
-                  </option>
-                </select>
-              </div>
-            </div>
+            <stting-select title="语音模式默认角色"
+              default="随机" :selectClassData="defaultTTSRole_selectClassData"
+              v-model:value="userSetting.ttsRole" />
+            <stting-select title="对话模式"
+              :selectClassData="chatMode_selectClassData"
+              v-model:value="userData.mode" />
           </div>
 
         </form>
@@ -113,6 +103,8 @@
 <script>
 import CardLineChart from "@/components/Cards/CardLineChart.vue"
 import CardPageVisits from "@/components/Cards/CardPageVisits.vue"
+import SttingSelect from "@/components/Settings/Select.vue"
+
 import axios from 'axios'
 
 export default {
@@ -124,6 +116,18 @@ export default {
         useTTS: false,
         ttsRole: '',
       },
+      userData: {
+        chat: [],
+        mode: '默认'
+      },
+      chatMode_selectClassData: [
+        { label: '默认', value: '' },
+        { label: '必应', value: 'bing' },
+        { label: 'ChatGPT API', value: 'api' },
+        { label: 'ChatGPT API3', value: 'api3' },
+        { label: 'ChatGLM', value: 'chatglm' },
+        { label: '浏览器', value: 'browser' },
+      ],
       defaultTTSRole_selectClassData: ['特别周', '无声铃鹿', '东海帝皇（帝宝，帝王）', '丸善斯基', '富士奇迹',
   '小栗帽', '黄金船', '伏特加', '大和赤骥', '大树快车', '草上飞', '菱亚马逊',
   '目白麦昆', '神鹰', '好歌剧', '成田白仁', '鲁道夫象征（皇帝）', '气槽',
@@ -240,6 +244,7 @@ export default {
   components: {
     CardLineChart,
     CardPageVisits,
+    SttingSelect,
   },
   computed : {
     chatmode: {
@@ -278,24 +283,24 @@ export default {
         if (!response.data.userSetting && response.data.chatConfig) this.$router.push({path:'/admin/settings'})
         this.userSetting = response.data.userSetting
       })
-      .catch((error) => {
-        console.log(error)
+      axios
+      .post(`${window.location.origin}/userData`)
+      .then(response => {
+        this.userData = response.data
       })
     },
     saveData: function() {
       axios
       .post(`${window.location.origin}/saveconfig`,{
-        userSetting: this.userSetting
+        userSetting: this.userSetting,
+        userConfig: this.userData
       })
       .then(response => {
-        console.log(response);
+        console.log(response.data)
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error)
       })
-    },
-    selectClass(target, event){
-      this.userSetting[target] = event.target.value
     },
   }
 }

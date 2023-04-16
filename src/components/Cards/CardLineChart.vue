@@ -147,10 +147,10 @@ export default {
     axios
       .post(`${window.location.origin}/userData`)
       .then(response => {
-        const BingData = response.data.filter(item => {
+        const BingData = response.data.chat.filter(item => {
           return item.model === "Bing"
         })
-        const ChatGPTData = response.data.filter(item => {
+        const ChatGPTData = response.data.chat.filter(item => {
           return item.model === "ChatGPT"
         })
         const getCountData = (data) => {
