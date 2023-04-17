@@ -28,6 +28,7 @@
     "gulp-append-prepend": "1.0.9",
     "js-base64": "^3.7.5",
     "js-md5": "^0.7.3",
+    "live2d-widget": "^3.1.4",
     "prismjs": "^1.29.0",
     "qrcode.vue": "^3.3.4",
     "tailwindcss": "3.3.1",

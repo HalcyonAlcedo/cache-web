@@ -411,6 +411,7 @@
             v-model:value="chatConfig.serverHost" />
           <stting-url title="渲染服务器地址" subTitle="可选择第三方渲染服务器" v-model:value="chatConfig.viewHost" />
           <stting-text title="Bot命名" subTitle="新渲染模式强制修改Bot命名" v-model:value="chatConfig.chatViewBotName" />
+          <stting-check title="Live2D" subTitle="开启预览版渲染图片时将显示live2d人物" v-model:value="chatConfig.live2d" />
         </div>
 
       </form>
@@ -507,6 +508,7 @@ export default {
         viewHost: '', //渲染服务器地址
         chatViewWidth: 1280, //图片渲染宽度
         chatViewBotName: '', //Bot命名
+        live2d: true,
         slackUserToken: '', //Slack用户Token
         slackBotUserToken: '', //Slack Bot Token
         slackClaudeUserId: '', //Slack成员id

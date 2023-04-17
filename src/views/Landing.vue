@@ -142,6 +142,7 @@ import Navbar from "@/components/Navbars/AuthNavbar.vue"
 import FooterSmall from "@/components/Footers/FooterSmall.vue"
 import QrcodeVue from 'qrcode.vue'
 import axios from 'axios'
+import {L2Dwidget} from 'live2d-widget'
 import { Base64 } from 'js-base64'
 
 export default {
@@ -191,13 +192,29 @@ export default {
         this.group = response.data.group
         this.herf = response.data.herf
         this.time = response.data.time
+
+        L2Dwidget.on('*',(n) => {
+          console.log(n)
+        }).init({
+          pluginRootPath: 'live2dw/',
+          pluginJsPath: 'lib/',
+          pluginModelPath: 'live2d-widget-model-shizuku/assets/',
+          tagMode: false,
+          debug: false,
+          model: { jsonPath: `../live2dw/live2d-widget-model-shizuku/assets/shizuku.${ response.data.mood || 'model' }.json` },
+          display: { position: 'right', width: 100, height: 200 },
+          mobile: { show: true},
+          react: { opacity: 0.7 },
+          log: false
+        })
+
       })
       .catch((err) => { // 请求失败处理
         this.$router.push({path:'/page',query: {code: this.$route.params.code, error: err}})
       })
     }
   }
-};
+}
 </script>
 
 <style>
