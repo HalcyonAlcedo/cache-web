@@ -121,7 +121,7 @@ export default {
       axios
       .post(`${window.location.origin}/userData`)
       .then(response => {
-        this.userData = response.data.chat
+        this.userData = response.data.chat.reverse()
       })
     },
     cleanCache: function() {

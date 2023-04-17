@@ -202,7 +202,7 @@ export default {
           tagMode: false,
           debug: false,
           model: { jsonPath: `../live2dw/live2d-widget-model-shizuku/assets/shizuku.${ response.data.mood || 'model' }.json` },
-          display: { position: 'right', width: 100, height: 200 },
+          display: { position: 'right', width: 150, height: 300 },
           mobile: { show: true},
           react: { opacity: 0.7 },
           log: false

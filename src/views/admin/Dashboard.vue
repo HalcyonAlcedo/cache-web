@@ -121,10 +121,11 @@ export default {
         mode: '默认'
       },
       chatMode_selectClassData: [
-        { label: '默认', value: '' },
+        { label: '默认', value: 'default' },
         { label: '必应', value: 'bing' },
         { label: 'ChatGPT API', value: 'api' },
         { label: 'ChatGPT API3', value: 'api3' },
+        { label: 'Slack Claude', value: 'claude' },
         { label: 'ChatGLM', value: 'chatglm' },
         { label: '浏览器', value: 'browser' },
       ],

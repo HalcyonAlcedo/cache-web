@@ -60,23 +60,39 @@ export default {
           "周日",
         ],
         datasets: [
-          {
-            label: "Bing",
-            backgroundColor: "#4c51bf",
-            borderColor: "#4c51bf",
-            data: [0, 0, 0, 0, 0, 0, 0],
-            fill: false,
-            tension: 0.3
-          },
-          {
-            label: "ChatGPT",
-            fill: false,
-            backgroundColor: "#fff",
-            borderColor: "#fff",
-            data: [0, 0, 0, 0, 0, 0, 0],
-            tension: 0.3
-          }
-        ],
+            {
+              label: "Bing",
+              backgroundColor: "#4c51bf",
+              borderColor: "#4c51bf",
+              data: [0, 0, 0, 0, 0, 0, 0],
+              fill: false,
+              tension: 0.3
+            },
+            {
+              label: "ChatGPT",
+              fill: false,
+              backgroundColor: "#fff",
+              borderColor: "#fff",
+              data: [0, 0, 0, 0, 0, 0, 0],
+              tension: 0.3
+            },
+            {
+              label: "ChatGLM",
+              fill: false,
+              backgroundColor: "#96512a",
+              borderColor: "#96512a",
+              data: [0, 0, 0, 0, 0, 0, 0],
+              tension: 0.3
+            },
+            {
+              label: "Claude",
+              fill: false,
+              backgroundColor: "#aa1155",
+              borderColor: "#aa1155",
+              data: [0, 0, 0, 0, 0, 0, 0],
+              tension: 0.3
+            }
+          ]
       },
       options: {
         maintainAspectRatio: false,
@@ -148,10 +164,16 @@ export default {
       .post(`${window.location.origin}/userData`)
       .then(response => {
         const BingData = response.data.chat.filter(item => {
-          return item.model === "Bing"
+          return item.model === "bing" || item.model === "Bing"
         })
         const ChatGPTData = response.data.chat.filter(item => {
-          return item.model === "ChatGPT"
+          return item.model === "ChatGPT" || item.model === "api" || item.model === "api3" || item.model === "browser"
+        })
+        const ChatGLMData = response.data.chat.filter(item => {
+          return item.model === "chatglm"
+        })
+        const ClaudeData = response.data.chat.filter(item => {
+          return item.model === "claude"
         })
         const getCountData = (data) => {
           let today = new Date()
@@ -202,6 +224,22 @@ export default {
               backgroundColor: "#fff",
               borderColor: "#fff",
               data: getCountData(ChatGPTData),
+              tension: 0.3
+            },
+            {
+              label: "ChatGLM",
+              fill: false,
+              backgroundColor: "#96512a",
+              borderColor: "#96512a",
+              data: getCountData(ChatGLMData),
+              tension: 0.3
+            },
+            {
+              label: "Claude",
+              fill: false,
+              backgroundColor: "#aa1155",
+              borderColor: "#aa1155",
+              data: getCountData(ClaudeData),
               tension: 0.3
             }
           ],
