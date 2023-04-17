@@ -193,21 +193,20 @@ export default {
         this.herf = response.data.herf
         this.time = response.data.time
 
-        L2Dwidget.on('*',(n) => {
-          console.log(n)
-        }).init({
-          pluginRootPath: 'live2dw/',
-          pluginJsPath: 'lib/',
-          pluginModelPath: 'live2d-widget-model-shizuku/assets/',
-          tagMode: false,
-          debug: false,
-          model: { jsonPath: `../live2dw/live2d-widget-model-shizuku/assets/shizuku.${ response.data.mood || 'model' }.json` },
-          display: { position: 'right', width: 150, height: 300 },
-          mobile: { show: true},
-          react: { opacity: 0.7 },
-          log: false
-        })
-
+        if (response.data.live2d) {
+          L2Dwidget.init({
+            pluginRootPath: 'live2dw/',
+            pluginJsPath: 'lib/',
+            pluginModelPath: 'live2d-widget-model-shizuku/assets/',
+            tagMode: false,
+            debug: false,
+            model: { jsonPath: `../live2dw/live2d-widget-model-shizuku/assets/shizuku.${ response.data.mood || 'model' }.json` },
+            display: { position: 'right', width: 150, height: 300 },
+            mobile: { show: true},
+            react: { opacity: 0.7 },
+            log: false
+          })
+        }
       })
       .catch((err) => { // 请求失败处理
         this.$router.push({path:'/page',query: {code: this.$route.params.code, error: err}})
