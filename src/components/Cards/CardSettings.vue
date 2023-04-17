@@ -254,12 +254,20 @@
                   <div v-bind:class="{ 'hidden': modeopenTab !== 6, 'block': modeopenTab === 6 }">
                     <!-- Slack Claude -->
                     <div class="flex flex-wrap">
-                      <stting-passwd title="Slack用户Token" subTitle="slackUserToken，在OAuth&Permissions页面获取。需要具有channels:history, chat:write, groups:history, im:history, mpim:history 这几个scope" v-model:value="chatConfig.slackUserToken" />
-                      <stting-passwd title="Slack Bot Token" subTitle="slackBotUserToken，在OAuth&Permissions页面获取。需要channels:history，groups:history，im:history 这几个scope" v-model:value="chatConfig.slackBotUserToken" />
-                      <stting-text title="Slack成员id"
-                        subTitle="在Slack中点击Claude头像查看详情，其中的成员ID复制过来"
+                      <stting-passwd title="Slack用户Token"
+                        subTitle="slackUserToken，在OAuth&Permissions页面获取。需要具有channels:history, chat:write, groups:history, im:history, mpim:history 这几个scope"
+                        v-model:value="chatConfig.slackUserToken" />
+                      <stting-passwd title="Slack Bot Token"
+                        subTitle="slackBotUserToken，在OAuth&Permissions页面获取。需要channels:history，groups:history，im:history 这几个scope"
+                        v-model:value="chatConfig.slackBotUserToken" />
+                      <stting-text title="Slack成员id" subTitle="在Slack中点击Claude头像查看详情，其中的成员ID复制过来"
                         v-model:value="chatConfig.slackClaudeUserId" />
-                      <stting-passwd title="Slack签名密钥" subTitle="Signing Secret。在Basic Information页面获取" v-model:value="chatConfig.slackSigningSecret" />
+                      <stting-passwd title="Slack签名密钥" subTitle="Signing Secret。在Basic Information页面获取"
+                        v-model:value="chatConfig.slackSigningSecret" />
+                      <stting-check title="Claude使用全局设定" subTitle="开启后，所有人每次发起新对话时，会先发送设定过去再开始对话，达到类似Bing自设定的效果"
+                        v-model:value="chatConfig.slackClaudeEnableGlobalPreset" />
+                      <stting-textarea title="Slack全局设定" subTitle="若启用全局设定，每个人都会默认使用这里的设定"
+                        v-model:value="chatConfig.slackClaudeGlobalPreset" />
                     </div>
                   </div>
                 </div>
@@ -513,6 +521,8 @@ export default {
         slackBotUserToken: '', //Slack Bot Token
         slackClaudeUserId: '', //Slack成员id
         slackSigningSecret: '', //slackSigningSecret
+        slackClaudeEnableGlobalPreset: true,
+        slackClaudeGlobalPreset: '',
       },
       redisConfig: {
         bingTokens: [],
