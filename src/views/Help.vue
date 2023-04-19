@@ -172,6 +172,12 @@ export default {
           tip: '管理功能'
         },
         {
+          icon: 'fas fa-wrench',
+          title: '设定',
+          text: '管理机器人使用的设定。',
+          tip: '管理功能'
+        },
+        {
           icon: 'fas fa-cogs',
           title: '系统设置',
           text: '可快捷设置机器人的一些运行参数。',

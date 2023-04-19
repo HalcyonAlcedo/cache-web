@@ -197,10 +197,10 @@ export default {
           L2Dwidget.init({
             pluginRootPath: 'live2dw/',
             pluginJsPath: 'lib/',
-            pluginModelPath: 'live2d-widget-model-shizuku/assets/',
+            pluginModelPath: `live2d-widget-model-${ response.data.live2dModel || 'default' }/assets/`,
             tagMode: false,
             debug: false,
-            model: { jsonPath: `../live2dw/live2d-widget-model-shizuku/assets/shizuku.${ response.data.mood || 'model' }.json` },
+            model: { jsonPath: `../live2dw/live2d-widget-model-${ response.data.live2dModel || 'default' }/assets/${ response.data.mood || 'model' }.json` },
             display: { position: 'right', width: 150, height: 300 },
             mobile: { show: true},
             react: { opacity: 0.7 },

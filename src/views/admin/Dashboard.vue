@@ -240,6 +240,7 @@ export default {
     SttingSelect,
     SttingTextarea,
   },
+  inject: ["AlertMethod"],
   computed: {
     chatmode: {
       get() {
@@ -277,10 +278,16 @@ export default {
           if (!response.data.userSetting && response.data.chatConfig) this.$router.push({ path: '/admin/settings' })
           this.userSetting = response.data.userSetting
         })
+        .catch((error) => {
+          this.AlertMethod(`服务器出错：${error}`, 'bg-red-400')
+        })
       axios
         .post(`${window.location.origin}/userData`)
         .then(response => {
           this.userData = response.data
+        })
+        .catch((error) => {
+          this.AlertMethod(`服务器出错：${error}`, 'bg-red-400')
         })
     },
     saveData: function () {
@@ -290,10 +297,10 @@ export default {
           userConfig: this.userData
         })
         .then(response => {
-          console.log(response.data)
+          this.AlertMethod('保存成功')
         })
         .catch((error) => {
-          console.log(error)
+          this.AlertMethod(`保存失败：${error}`, 'bg-red-400')
         })
     },
   }

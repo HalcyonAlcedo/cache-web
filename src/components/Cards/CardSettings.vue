@@ -78,9 +78,18 @@
                       <stting-check title="图片引用消息" subTitle="在回复图片时引用原始消息" v-model:value="chatConfig.quoteReply" />
                       <stting-check title="启用二维码" subTitle="在图片模式中启用二维码。二维码会包含当前缓存浏览器访问链接，如果未设置反代和cdn将会暴露服务器ip，如不想显示可关闭。"
                         v-model:value="chatConfig.showQRCode" />
-                      <stting-check title="预制渲染服务器访问代码" subTitle="图片内容渲染服务器开启预制访问代码，当渲染服务器访问较慢时可以开启,但无法保证访问代码可以正常访问页面"
+                      <stting-text title="Bot命名" subTitle="新渲染模式强制修改Bot命名" v-model:value="chatConfig.chatViewBotName" />
+                      <stting-url title="渲染服务器地址" subTitle="可选择第三方渲染服务器" v-model:value="chatConfig.viewHost" />
+
+                      <stting-check title="Live2D" subTitle="开启预览版渲染图片时将显示live2d人物" v-model:value="chatConfig.live2d" />
+                      <stting-text title="Live2D模型" subTitle="使用的Live2D模式文件" v-model:value="chatConfig.live2dModel" />
+                      <stting-number title="图片渲染宽度" subTitle="聊天页面渲染窗口的宽度" min="600"
+                        v-model:value="chatConfig.chatViewWidth" />
+                      <div class="w-full lg:w-9/12 px-4"></div>
+                      <stting-check title="旧版本渲染" subTitle="开启后将使用旧版本渲染引擎进行图片模式渲染" v-model:value="chatConfig.oldview" />
+                      <stting-check title="(旧)预制渲染服务器访问代码" subTitle="图片内容渲染服务器开启预制访问代码，当渲染服务器访问较慢时可以开启,但无法保证访问代码可以正常访问页面"
                         v-model:value="chatConfig.cacheEntry" />
-                      <stting-url title="渲染服务器地址" subTitle="可选择第三方渲染服务器" v-model:value="chatConfig.cacheUrl" />
+                      <stting-url title="(旧)渲染服务器地址" subTitle="可选择第三方渲染服务器" v-model:value="chatConfig.cacheUrl" />
                     </div>
                   </div>
                   <div v-bind:class="{ 'hidden': chatpenTab !== 3, 'block': chatpenTab === 3 }">
@@ -408,18 +417,13 @@
         </div>
 
         <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-          预览版配置
+          后台配置
         </h6>
         <div class="flex flex-wrap">
-          <stting-check title="预览版本" subTitle="开启预览版本后，图片渲染将使用新的服务API创建缓存页面并渲染" v-model:value="chatConfig.preview" />
           <stting-number title="系统Api服务端口" subTitle="系统Api服务开启的端口号，如需外网访问请将系统防火墙和服务器防火墙对应端口开放,修改后请重启" min="1" max="65535"
             v-model:value="chatConfig.serverPort" />
-          <stting-number title="图片渲染宽度" subTitle="聊天页面渲染窗口的宽度" min="600" v-model:value="chatConfig.chatViewWidth" />
           <stting-text title="系统服务访问域名" subTitle="使用域名代替公网ip，适用于有服务器和域名的朋友避免暴露ip使用"
             v-model:value="chatConfig.serverHost" />
-          <stting-url title="渲染服务器地址" subTitle="可选择第三方渲染服务器" v-model:value="chatConfig.viewHost" />
-          <stting-text title="Bot命名" subTitle="新渲染模式强制修改Bot命名" v-model:value="chatConfig.chatViewBotName" />
-          <stting-check title="Live2D" subTitle="开启预览版渲染图片时将显示live2d人物" v-model:value="chatConfig.live2d" />
         </div>
 
       </form>
@@ -510,13 +514,14 @@ export default {
         helloPrompt: '写一段话让大家来找我聊天。类似于“有人找我聊天吗？"这种风格，轻松随意一点控制在20个字以内', //打招呼prompt
         helloInterval: 3, //打招呼间隔(小时)
         helloProbability: 50, //打招呼的触发概率(%)
-        preview: false, //预览版本
+        oldview: false, //预览版本
         serverPort: 3321, //系统Api服务端口
         serverHost: '', //系统服务访问域名
         viewHost: '', //渲染服务器地址
         chatViewWidth: 1280, //图片渲染宽度
         chatViewBotName: '', //Bot命名
         live2d: true,
+        live2dModel: 'default',
         slackUserToken: '', //Slack用户Token
         slackBotUserToken: '', //Slack Bot Token
         slackClaudeUserId: '', //Slack成员id
@@ -665,6 +670,7 @@ export default {
     SttingText,
     SttingPasswd,
   },
+  inject: ["AlertMethod"],
   created() {
     this.getData()
   },
@@ -680,7 +686,7 @@ export default {
           this.chatConfig.promptBlockWords = response.data.chatConfig.promptBlockWords.join(',')
         })
         .catch((error) => {
-          console.log(error)
+          this.AlertMethod(`服务器出错：${error}`, 'bg-red-400')
         })
     },
     saveData: function () {
@@ -690,10 +696,10 @@ export default {
           redisConfig: this.redisConfig
         })
         .then(response => {
-          console.log(response)
+          this.AlertMethod('保存成功')
         })
         .catch((error) => {
-          console.log(error)
+          this.AlertMethod(`保存失败：${error}`, 'bg-red-400')
         })
     },
     delToken: function (token) {
