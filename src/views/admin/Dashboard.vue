@@ -75,12 +75,12 @@
 
     <div class="flex flex-wrap">
       <div class="w-full mb-12 xl:mb-0 px-4">
-        <card-line-chart />
+        <card-line-chart :chatData="userData.chat" />
       </div>
     </div>
     <div class="flex flex-wrap mt-4">
       <div class="w-full mb-12 xl:mb-0 px-4">
-        <card-page-visits />
+        <card-page-visits :chatData="userData.chat" @get-data="getData" />
       </div>
     </div>
   </div>
