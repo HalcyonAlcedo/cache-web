@@ -179,7 +179,7 @@
                     <div class="flex flex-wrap">
                       <stting-check title="强制使用OpenAI反代" subTitle="即使配置了proxy，依然使用OpenAI反代"
                         v-model:value="chatConfig.openAiForceUseReverse" />
-                      <stting-text title="OpenAI API Key" subTitle="OpenAI的ApiKey，用于访问OpenAI的API接口"
+                      <stting-passwd title="OpenAI API Key" subTitle="OpenAI的ApiKey，用于访问OpenAI的API接口"
                         v-model:value="chatConfig.apiKey" />
                       <stting-text title="AI名字" subTitle="AI认为的自己的名字，当你问他你是谁是他会回答这里的名字"
                         v-model:value="chatConfig.assistantLabel" />
