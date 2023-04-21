@@ -114,6 +114,9 @@
                       <stting-text title="语音过滤正则表达式"
                         subTitle="语音模式下，配置此项以过滤不想被读出来的内容。表达式测试地址：https://www.runoob.com/regexp/regexp-syntax.html"
                         v-model:value="chatConfig.ttsRegex" />
+                      <stting-url title="云转码API地址"
+                        subTitle="目前只支持node-silk语音转码，如果本地无法安装node-silk可填写http://alcedogroup.com:3031"
+                        v-model:value="chatConfig.cloudTranscode" />
                     </div>
                   </div>
                 </div>
@@ -520,14 +523,15 @@ export default {
         viewHost: '', //渲染服务器地址
         chatViewWidth: 1280, //图片渲染宽度
         chatViewBotName: '', //Bot命名
-        live2d: true,
-        live2dModel: 'default',
+        live2d: true, //开启live2d
+        live2dModel: 'default', //live2d模型
         slackUserToken: '', //Slack用户Token
         slackBotUserToken: '', //Slack Bot Token
         slackClaudeUserId: '', //Slack成员id
         slackSigningSecret: '', //slackSigningSecret
         slackClaudeEnableGlobalPreset: true,
         slackClaudeGlobalPreset: '',
+        cloudTranscode: '' //云转码API
       },
       redisConfig: {
         bingTokens: [],

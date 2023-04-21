@@ -32,7 +32,8 @@ import Login from "@/views/auth/Login.vue";
 import Landing from "@/views/Landing.vue";
 import Help from "@/views/Help.vue";
 import ErrPage from "@/views/Error.vue";
-import Updata from "@/views/Updata.vue";
+// import Updata from "@/views/Updata.vue";
+import Version from "@/views/Version.vue";
 import Index from "@/views/Index.vue";
 import Statistics from "@/views/Statistics.vue";
 
@@ -138,10 +139,14 @@ const routes = [
   {
     path: "/statistics/",
     component: Statistics,
-  },
+  },/*
   {
     path: "/updata",
     component: Updata,
+  },*/
+  {
+    path: "/version",
+    component: Version,
   },
   {
     path: "/",
