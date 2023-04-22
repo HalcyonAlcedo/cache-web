@@ -115,7 +115,7 @@
                         subTitle="语音模式下，配置此项以过滤不想被读出来的内容。表达式测试地址：https://www.runoob.com/regexp/regexp-syntax.html"
                         v-model:value="chatConfig.ttsRegex" />
                       <stting-url title="云转码API地址"
-                        subTitle="目前只支持node-silk语音转码，如果本地无法安装node-silk可填写http://alcedogroup.com:3031"
+                        subTitle="目前只支持node-silk语音转码，可在本地node-silk无法使用时尝试使用云端资源转码"
                         v-model:value="chatConfig.cloudTranscode" />
                       <stting-select title="云转码模式" subTitle="云转码API发送数据的模式，默认发送数据链接，如果你部署的是本地服务，请改为文件"
                         :selectClassData="[
