@@ -117,8 +117,9 @@
                       <stting-url title="云转码API地址"
                         subTitle="目前只支持node-silk语音转码，如果本地无法安装node-silk可填写http://alcedogroup.com:3031"
                         v-model:value="chatConfig.cloudTranscode" />
-                      <stting-select title="云转码模式" subTitle="云转码API发送数据的模式，默认发送数据链接，如果你部署的是本地服务，请改为数据"
+                      <stting-select title="云转码模式" subTitle="云转码API发送数据的模式，默认发送数据链接，如果你部署的是本地服务，请改为文件"
                         :selectClassData="[
+                          { label: '文件', value: 'file' },
                           { label: '链接', value: 'url' },
                           { label: '数据', value: 'buffer' }
                         ]"
@@ -539,7 +540,7 @@ export default {
         slackClaudeEnableGlobalPreset: true,
         slackClaudeGlobalPreset: '',
         cloudTranscode: '', //云转码API
-        cloudMode: '' //云转码模式
+        cloudMode: 'url' //云转码模式
       },
       redisConfig: {
         bingTokens: [],
