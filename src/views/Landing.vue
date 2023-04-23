@@ -9,7 +9,7 @@
         <div class="container mx-auto px-4">
           <div class="flex flex-wrap">
           </div>
-          <div class="flex flex-wrap items-center mt-32">
+          <div class="flex flex-wrap mt-32">
             <div :class="`w-full lg:w-${this.$route.query.qr === 'true' ? 9 : 12}/12 px-4 mr-auto ml-auto mb-4`">
               <div
                 class="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-white"
@@ -26,11 +26,11 @@
               </h3>
               <v-md-preview class="mdcode whitespace-pre-wrap break-all" :text="question"></v-md-preview>
             </div>
-            <div v-if="this.$route.query.qr === 'true'" class="w-full lg:w-3/12 px-4 mr-auto ml-auto">
+            <div v-if="this.$route.query.qr === 'true'" class="w-full lg:w-3/12 px-6 mr-auto ml-auto mt-8">
               <div
                 class="relative flex flex-col min-w-0 break-words bg-white w-full mb-2 shadow-lg rounded-lg items-center"
               >
-                <div class="mt-4">
+                <div class="mt-6">
                   <qrcode-vue :value="herf" :size="150" />
                 </div>
                 <blockquote class="relative p-4 mb-1">
@@ -152,7 +152,7 @@ export default {
       userImg: '',
       bot: '',
       botImg: '',
-      question: '',
+      question: 'aaa',
       message: '',
       group: '',
       quote: [],

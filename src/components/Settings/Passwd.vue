@@ -20,11 +20,12 @@
         >
           {{ title }}
         </label>
-        <input
-            v-model="passwordData"
-            type="password"
-            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          />
+        <div class="relative flex w-full flex-wrap items-stretch mb-3">
+          <input v-model="passwordData" :type="switchPasswd ? 'password' : 'text'" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"/>
+          <span class="z-10 h-full leading-snug font-normal absolute text-center text-slate-300 absolute bg-transparent rounded text-base items-center justify-center w-8 right-0 pr-3 py-3">
+            <i @click="switchPasswd = !switchPasswd" :class="switchPasswd ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+          </span>
+        </div>
       </div>
   </div>
 </template>
@@ -48,7 +49,8 @@ export default {
   },
   data() {
     return {
-      tooltipShow: false
+      tooltipShow: false,
+      switchPasswd: true
     }
   },
   computed: {
