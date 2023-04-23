@@ -152,7 +152,7 @@ export default {
       userImg: '',
       bot: '',
       botImg: '',
-      question: 'aaa',
+      question: '',
       message: '',
       group: '',
       quote: [],
