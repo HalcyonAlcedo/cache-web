@@ -130,10 +130,9 @@
                       </h6>
                       <stting-url title="云转码API地址" subTitle="目前只支持node-silk语音转码，可在本地node-silk无法使用时尝试使用云端资源转码"
                         v-model:value="chatConfig.cloudTranscode" />
-                      <stting-select title="云转码模式" subTitle="云转码API发送数据的模式，默认发送数据链接，如果你部署的是本地服务，请改为文件" :selectClassData="[
+                      <stting-select title="云转码模式" subTitle="云转码API发送数据的模式，默认发送数据链接，如果你部署的是本地vits服务或使用的是微软azure，请改为文件" :selectClassData="[
                           { label: '文件', value: 'file' },
-                          { label: '链接', value: 'url' },
-                          { label: '数据', value: 'buffer' }
+                          { label: '链接', value: 'url' }
                         ]" v-model:value="chatConfig.cloudMode" />
 
                     </div>
