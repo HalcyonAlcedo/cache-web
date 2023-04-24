@@ -85,7 +85,9 @@
                       <stting-text title="Live2D模型" subTitle="使用的Live2D模式文件" v-model:value="chatConfig.live2dModel" />
                       <stting-number title="图片渲染宽度" subTitle="聊天页面渲染窗口的宽度" min="600"
                         v-model:value="chatConfig.chatViewWidth" />
-                      <div class="w-full lg:w-9/12 px-4"></div>
+                      <stting-check title="云渲染" subTitle="是否使用云资源进行图片渲染，需要开放服务器端口后才能使用，不支持旧版本渲染"
+                        v-model:value="chatConfig.cloudRender" />
+                      <div class="w-full lg:w-6/12 px-4"></div>
                       <stting-check title="旧版本渲染" subTitle="开启后将使用旧版本渲染引擎进行图片模式渲染" v-model:value="chatConfig.oldview" />
                       <stting-check title="(旧)预制渲染服务器访问代码" subTitle="图片内容渲染服务器开启预制访问代码，当渲染服务器访问较慢时可以开启,但无法保证访问代码可以正常访问页面"
                         v-model:value="chatConfig.cacheEntry" />
@@ -128,12 +130,11 @@
                       <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase w-full lg:w-12/12 px-4">
                         云转码设置
                       </h6>
-                      <stting-url title="云转码API地址" subTitle="目前只支持node-silk语音转码，可在本地node-silk无法使用时尝试使用云端资源转码"
-                        v-model:value="chatConfig.cloudTranscode" />
-                      <stting-select title="云转码模式" subTitle="云转码API发送数据的模式，默认发送数据链接，如果你部署的是本地vits服务或使用的是微软azure，请改为文件" :selectClassData="[
-                          { label: '文件', value: 'file' },
-                          { label: '链接', value: 'url' }
-                        ]" v-model:value="chatConfig.cloudMode" />
+                      <stting-select title="云转码模式" subTitle="云转码API发送数据的模式，默认发送数据链接，如果你部署的是本地vits服务或使用的是微软azure，请改为文件"
+                        :selectClassData="[
+                            { label: '文件', value: 'file' },
+                            { label: '链接', value: 'url' }
+                          ]" v-model:value="chatConfig.cloudMode" />
 
                     </div>
                   </div>
@@ -455,6 +456,7 @@
             v-model:value="chatConfig.serverPort" />
           <stting-text title="系统服务访问域名" subTitle="使用域名代替公网ip，适用于有服务器和域名的朋友避免暴露ip使用"
             v-model:value="chatConfig.serverHost" />
+          <stting-url title="云服务API地址" subTitle="目前支持node-silk语音转码，和云图片渲染" v-model:value="chatConfig.cloudTranscode" />
         </div>
 
       </form>
@@ -566,7 +568,8 @@ export default {
         slackClaudeEnableGlobalPreset: true,
         slackClaudeGlobalPreset: '',
         cloudTranscode: '', //云转码API
-        cloudMode: 'url' //云转码模式
+        cloudMode: 'url', //云转码模式
+        cloudRender: false //云渲染
       },
       redisConfig: {
         bingTokens: [],
