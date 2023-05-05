@@ -129,20 +129,20 @@
                 {{item}}
               </span>
             </div>
-
           </div>
         </div>
       </section>
     </main>
+    <card-live2d :cubismModel="live2d.cubismModel" :mood="live2d.mood" />
     <footer-small />
   </div>
 </template>
 <script>
 import Navbar from "@/components/Navbars/AuthNavbar.vue"
 import FooterSmall from "@/components/Footers/FooterSmall.vue"
+import CardLive2d from "@/components/Cards/CardLive2D.vue"
 import QrcodeVue from 'qrcode.vue'
 import axios from 'axios'
-import {L2Dwidget} from 'live2d-widget'
 import { Base64 } from 'js-base64'
 
 export default {
@@ -159,13 +159,18 @@ export default {
       images: [],
       herf: '',
       time: '',
-      suggest: []
+      suggest: [],
+      live2d:{
+        cubismModel: '/live2dw/Murasame/Murasame.model3.json',
+        mood: 'Tapface',
+      }
     };
   },
   components: {
     Navbar,
     FooterSmall,
-    QrcodeVue
+    QrcodeVue,
+    CardLive2d
   },
   created() {
     this.getData()
@@ -194,18 +199,8 @@ export default {
         this.time = response.data.time
 
         if (response.data.live2d) {
-          L2Dwidget.init({
-            pluginRootPath: 'live2dw/',
-            pluginJsPath: 'lib/',
-            pluginModelPath: `live2d-widget-model-${ response.data.live2dModel || 'default' }/assets/`,
-            tagMode: false,
-            debug: false,
-            model: { jsonPath: `../live2dw/live2d-widget-model-${ response.data.live2dModel || 'default' }/assets/${ response.data.mood || 'model' }.json` },
-            display: { position: 'right', width: 150, height: 300 },
-            mobile: { show: true},
-            react: { opacity: 0.7 },
-            log: false
-          })
+          this.live2d.cubismModel = response.data.live2dModel
+          this.live2d.mood = response.data.mood
         }
       })
       .catch((err) => { // 请求失败处理
