@@ -42,6 +42,7 @@ export default {
         this.model.position.y = this.cubismData.option.position.y
         this.model.rotation = this.cubismData.option.rotation
         this.model.motion(this.cubismData.mood)
+        window.Live2d = true
       }
     }
   }

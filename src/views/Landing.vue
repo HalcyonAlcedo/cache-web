@@ -116,7 +116,6 @@
 import Navbar from "@/components/Navbars/AuthNavbar.vue"
 import FooterSmall from "@/components/Footers/FooterSmall.vue"
 import CardLive2d from "@/components/Cards/CardLive2D.vue"
-import { reactive } from 'vue'
 import QrcodeVue from 'qrcode.vue'
 import axios from 'axios'
 import { Base64 } from 'js-base64'
