@@ -87,6 +87,8 @@
                         v-model:value="chatConfig.chatViewWidth" />
                       <stting-check title="云渲染" subTitle="是否使用云资源进行图片渲染，需要开放服务器端口后才能使用，不支持旧版本渲染"
                         v-model:value="chatConfig.cloudRender" />
+                      <stting-number title="云渲染DPR" subTitle="设置云渲染画面缩放，数值愈大越清晰" min="1"
+                        v-model:value="chatConfig.cloudDPR" />
                       <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase w-full lg:w-12/12 px-4">
                         Live2D
                       </h6>
@@ -592,7 +594,8 @@ export default {
         slackClaudeGlobalPreset: '',
         cloudTranscode: '', //云转码API
         cloudMode: 'url', //云转码模式
-        cloudRender: false //云渲染
+        cloudRender: false, //云渲染
+        cloudDPR: 1,
       },
       redisConfig: {
         bingTokens: [],
