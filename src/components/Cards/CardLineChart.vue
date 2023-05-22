@@ -126,6 +126,9 @@ export default {
       const ClaudeData = this.chatData?.filter(item => {
         return item.model === "claude"
       }) || Array.from({ length: 7 }, () => 0)
+      const XH = this.chatData?.filter(item => {
+        return item.model === "xh"
+      }) || Array.from({ length: 7 }, () => 0)
       const getCountData = (data) => {
         let today = new Date()
         let filteredData = data.filter(item => {
@@ -191,6 +194,14 @@ export default {
             backgroundColor: "#aa1155",
             borderColor: "#aa1155",
             data: getCountData(ClaudeData),
+            tension: 0.3
+          },
+          {
+            label: "星火",
+            fill: false,
+            backgroundColor: "#00BFFF",
+            borderColor: "#00BFFF",
+            data: getCountData(XH),
             tension: 0.3
           }
         ],

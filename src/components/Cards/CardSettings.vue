@@ -139,11 +139,26 @@
                       <stting-number title="控制情感变化程度" min="0" max="1" v-model:value="chatConfig.noiseScale" />
                       <stting-number title="控制音素发音长度" min="0" max="1" v-model:value="chatConfig.noiseScaleW" />
                       <stting-number title="控制整体语速" min="0" max="2" v-model:value="chatConfig.lengthScale" />
+                      <stting-check title="vits模式日语输出"
+                        subTitle="使用vits语音时，将机器人的文字回复翻译成日文后获取语音。\n若想使用插件的翻译功能，发送'#chatgpt翻译帮助'查看使用方法，支持图片翻译，引用翻译..."
+                        v-model:value="chatConfig.autoJapanese" />
                       <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase w-full lg:w-12/12 px-4">
                         Azure
                       </h6>
                       <stting-passwd title="语音服务密钥" subTitle="Azure的语音服务密钥" v-model:value="chatConfig.azureTTSKey" />
                       <stting-text title="语音服务区域" subTitle="Azure语音服务区域" v-model:value="chatConfig.azureTTSRegion" />
+                      <stting-check title="Azure情绪多样化"
+                        subTitle="切换角色后使用'#chatgpt使用设定xxx/'重新开始对话以更新不同角色的情绪配置。支持使用不同的说话风格回复，各个角色支持说话风格详情：https://speech.microsoft.com/portal/voicegallery"
+                        v-model:value="chatConfig.azureTTSEmotion" />
+                      <stting-check title="Azure情绪纠正"
+                        subTitle="当机器人未使用或使用了不支持的说话风格时，将在对话中提醒机器人。注意：bing模式开启此项后有概率增大触发抱歉的机率，且不要单独开启此项"
+                        v-model:value="chatConfig.enhanceAzureTTSEmotion" />
+                      <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase w-full lg:w-12/12 px-4">
+                        Voicevox
+                      </h6>
+                      <stting-url title="voicevox语音转换API地址"
+                        subTitle="可使用https://2ndelement-voicevox.hf.space, 也可github搜索voicevox-engine自建"
+                        v-model:value="chatConfig.voicevoxSpace" />
                       <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase w-full lg:w-12/12 px-4">
                         云转码设置
                       </h6>
@@ -207,6 +222,13 @@
                   v-on:click="toggleTabs('modeopenTab', 6)"
                   v-bind:class="{ 'text-gray-500 bg-white': modeopenTab !== 6, 'bg-purple-200': modeopenTab === 6 }">
                   Slack Claude
+                </a>
+              </li>
+              <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
+                  v-on:click="toggleTabs('modeopenTab', 7)"
+                  v-bind:class="{ 'text-gray-500 bg-white': modeopenTab !== 7, 'bg-purple-200': modeopenTab === 7 }">
+                  星火
                 </a>
               </li>
             </ul>
@@ -273,6 +295,8 @@
                       <stting-check title="对话使用sydney反代"
                         subTitle="【一般情况无需也不建议开启】默认情况下仅创建对话走反代，对话时仍然直连微软。开启本选项将使对话过程也走反，需反代支持"
                         v-model:value="chatConfig.sydneyWebsocketUseProxy" />
+                      <stting-check title="允许生成图像等内容" subTitle="开启后类似网页版能够发图。但是此选项会占用大量token，自设定等模式下容易爆token"
+                        v-model:value="chatConfig.enableGenerateContents" />
                     </div>
                   </div>
                   <div v-bind:class="{ 'hidden': modeopenTab !== 3, 'block': modeopenTab === 3 }">
@@ -326,6 +350,13 @@
                         v-model:value="chatConfig.slackClaudeEnableGlobalPreset" />
                       <stting-textarea title="Slack全局设定" subTitle="若启用全局设定，每个人都会默认使用这里的设定"
                         v-model:value="chatConfig.slackClaudeGlobalPreset" />
+                    </div>
+                  </div>
+                  <div v-bind:class="{ 'hidden': modeopenTab !== 7, 'block': modeopenTab === 7 }">
+                    <!-- 星火 -->
+                    <div class="flex flex-wrap">
+                      <stting-url title="星火Cookie" subTitle="获取对话页面的ssoSessionId cookie。不要带等号和分号"
+                        v-model:value="chatConfig.xinghuoToken" />
                     </div>
                   </div>
                 </div>
@@ -477,6 +508,7 @@
           <stting-text title="系统服务访问域名" subTitle="使用域名代替公网ip，适用于有服务器和域名的朋友避免暴露ip使用"
             v-model:value="chatConfig.serverHost" />
           <stting-url title="云服务API地址" subTitle="目前支持node-silk语音转码，和云图片渲染" v-model:value="chatConfig.cloudTranscode" />
+          <stting-check title="允许群获取后台地址" subTitle="是否允许群获取后台地址，关闭后将只能私聊获取" v-model:value="chatConfig.groupAdminPage" />
         </div>
 
       </form>
@@ -595,7 +627,15 @@ export default {
         cloudTranscode: '', //云转码API
         cloudMode: 'url', //云转码模式
         cloudRender: false, //云渲染
-        cloudDPR: 1,
+        cloudDPR: 1, //云渲染DPR
+        azureTTSEmotion: false, //Azure情绪多样化
+        enhanceAzureTTSEmotion: false, //Azure情绪纠正
+        voicevoxSpace: '', //voicevox语音转换API地址
+        voicevoxTTSSpeaker: '护士机器子T', //VoiceVox默认角色
+        autoJapanese: false, //vits模式日语输出
+        groupAdminPage: false, //允许群获取后台地址
+        xinghuoToken: '', //星火Cookie
+        enableGenerateContents: false, //允许生成图像等内容
       },
       redisConfig: {
         bingTokens: [],
