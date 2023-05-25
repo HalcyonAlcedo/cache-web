@@ -29,6 +29,18 @@
           <stting-number title="对话保留时长" subTitle="每个人发起的对话保留时长。超过这个时长没有进行对话，再进行对话将开启新的对话。" min="0"
             v-model:value="chatConfig.conversationPreserveTime" />
           <stting-url title="代理服务器地址" subTitle="数据通过代理服务器发送，http或socks5代理。配置后需重启。" v-model:value="chatConfig.proxy" />
+          <stting-select title="对话模式" :selectClassData="[
+            { label: '默认', value: 'default' },
+            { label: '必应', value: 'bing' },
+            { label: 'ChatGPT API', value: 'api' },
+            { label: 'ChatGPT API3', value: 'api3' },
+            { label: 'Slack Claude', value: 'claude' },
+            { label: 'ChatGLM', value: 'chatglm' },
+            { label: '星火', value: 'xh' },
+            { label: '浏览器', value: 'browser' },
+          ]" v-model:value="redisConfig.useMode" />
+          <stting-check title="新版帮助" subTitle="使用新版渲染的帮助页面替换yunzai版本帮助，如不习惯可关闭。"
+            v-model:value="chatConfig.newhelp" />
         </div>
 
         <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
@@ -69,6 +81,8 @@
                         v-model:value="chatConfig.autoUsePictureThreshold" />
                       <stting-check title="长文本自动转图片" subTitle="字数大于阈值会自动用图片发送，即使是文本模式"
                         v-model:value="chatConfig.autoUsePicture" />
+                      <stting-check title="是否允许机器人真at" subTitle="开启后机器人的回复如果at群友会真的at"
+                        v-model:value="chatConfig.enableRobotAt" />
                     </div>
                   </div>
                   <div v-bind:class="{ 'hidden': chatpenTab !== 2, 'block': chatpenTab === 2 }">
@@ -273,8 +287,6 @@
                       <stting-textarea title="机器人读取聊天记录时的后台prompt" v-model:value="chatConfig.groupContextTip" />
                       <stting-check title="加强主人认知" subTitle="加强主人认知。希望机器人认清主人，避免NTR可开启。开启后可能会与自设定的内容有部分冲突。sydney模式可以放心开启"
                         v-model:value="chatConfig.enforceMaster" />
-                      <stting-check title="是否允许机器人真at" subTitle="开启后机器人的回复如果at群友会真的at"
-                        v-model:value="chatConfig.enableRobotAt" />
                       <stting-check title="Bing抱歉是否不计入聊天记录" subTitle="有时无限抱歉，就关掉这个再多问几次试试，可能有奇效"
                         v-model:value="chatConfig.sydneyApologyIgnored" />
                       <stting-check title="情感显示" subTitle="开启Sydney的情感显示，仅在图片模式下生效"
@@ -606,7 +618,8 @@ export default {
         helloPrompt: '写一段话让大家来找我聊天。类似于“有人找我聊天吗？"这种风格，轻松随意一点控制在20个字以内', //打招呼prompt
         helloInterval: 3, //打招呼间隔(小时)
         helloProbability: 50, //打招呼的触发概率(%)
-        oldview: false, //预览版本
+        oldview: false, //旧版本渲染
+        newhelp: false, //新版本帮助
         serverPort: 3321, //系统Api服务端口
         serverHost: '', //系统服务访问域名
         viewHost: '', //渲染服务器地址
@@ -640,6 +653,7 @@ export default {
       redisConfig: {
         bingTokens: [],
         turnConfirm: true,
+        useMode: '',
       },
       modeopenTab: 1,
       chatpenTab: 1,
