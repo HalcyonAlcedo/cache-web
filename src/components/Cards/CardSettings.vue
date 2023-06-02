@@ -30,7 +30,6 @@
             v-model:value="chatConfig.conversationPreserveTime" />
           <stting-url title="代理服务器地址" subTitle="数据通过代理服务器发送，http或socks5代理。配置后需重启。" v-model:value="chatConfig.proxy" />
           <stting-select title="对话模式" :selectClassData="[
-            { label: '默认', value: 'default' },
             { label: '必应', value: 'bing' },
             { label: 'ChatGPT API', value: 'api' },
             { label: 'ChatGPT API3', value: 'api3' },
