@@ -145,7 +145,8 @@ export default {
             x: 0,
             y: 0
           },
-          rotation: 0
+          rotation: 0,
+          alpha: 1
         }
       }
     }

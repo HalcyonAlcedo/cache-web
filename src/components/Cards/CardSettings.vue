@@ -39,8 +39,7 @@
             { label: '星火', value: 'xh' },
             { label: '浏览器', value: 'browser' },
           ]" v-model:value="redisConfig.useMode" />
-          <stting-check title="新版帮助" subTitle="使用新版渲染的帮助页面替换yunzai版本帮助，如不习惯可关闭。"
-            v-model:value="chatConfig.newhelp" />
+          <stting-check title="新版帮助" subTitle="使用新版渲染的帮助页面替换yunzai版本帮助，如不习惯可关闭。" v-model:value="chatConfig.newhelp" />
         </div>
 
         <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
@@ -116,6 +115,8 @@
                         v-model:value="chatConfig.live2dOption_positionY" />
                       <stting-number title="Live2D模型旋转" subTitle="Live2d模型在区域的旋转角度"
                         v-model:value="chatConfig.live2dOption_rotation" />
+                      <stting-number title="Live2D模型透明度" subTitle="Live2d模型的透明度"
+                        v-model:value="chatConfig.live2dOption_alpha" />
                       <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase w-full lg:w-12/12 px-4">
                         旧版本渲染设置
                       </h6>
@@ -256,6 +257,9 @@
                         v-model:value="chatConfig.openAiForceUseReverse" />
                       <stting-passwd title="OpenAI API Key" subTitle="OpenAI的ApiKey，用于访问OpenAI的API接口"
                         v-model:value="chatConfig.apiKey" />
+                      <stting-text title="OpenAI 模型"
+                        subTitle="gpt-4, gpt-4-0314, gpt-4-32k, gpt-4-32k-0314, gpt-3.5-turbo, gpt-3.5-turbo-0301。默认为gpt-3.5-turbo，gpt-4需账户支持"
+                        v-model:value="chatConfig.model" />
                       <stting-text title="AI名字" subTitle="AI认为的自己的名字，当你问他你是谁是他会回答这里的名字"
                         v-model:value="chatConfig.assistantLabel" />
                       <stting-number title="temperature" subTitle="用于控制回复内容的多样性，数值越大回复越加随机、多元化，数值越小回复越加保守" min="0" max="2"
@@ -584,6 +588,7 @@ export default {
         sydneyFirstMessageTimeout: 40000,
         emojiBaseURL: 'https://www.gstatic.com/android/keyboard/emojikitchen',
         apiKey: '', //OpenAI API Key
+        model: '',// OpenAI 模型
         openAiBaseUrl: 'https://mondstadt.d201.eu.org/v1', //OpenAI API服务器地址
         openAiForceUseReverse: false, //强制使用OpenAI反代
         promptPrefixOverride: 'Your answer shouldn\'t be too verbose. Prefer to answer in Chinese.', //AI风格
@@ -631,6 +636,7 @@ export default {
         live2dOption_positionX: 0, //live2d模型配置
         live2dOption_positionY: 0, //live2d模型配置
         live2dOption_rotation: 0, //live2d模型配置
+        live2dOption_alpha: 1, //live2d模型配置
         slackUserToken: '', //Slack用户Token
         slackBotUserToken: '', //Slack Bot Token
         slackClaudeUserId: '', //Slack成员id
