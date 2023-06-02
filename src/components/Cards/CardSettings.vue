@@ -321,6 +321,8 @@
                       <stting-url title="ChatGPT API反代服务器地址" subTitle="ChatGPT的API反代服务器，用于绕过Cloudflare访问ChatGPT API"
                         v-model:value="chatConfig.api" />
                       <stting-url title="apiBaseUrl地址" v-model:value="chatConfig.apiBaseUrl" />
+                      <stting-passwd title="OpenAI refreshToken" subTitle="OpenAI的refreshToken，用于刷新Access Token"
+                        v-model:value="chatConfig.OpenAiPlatformRefreshToken" />
                       <stting-check title="强制使用ChatGPT反代" subTitle="即使配置了proxy，依然使用ChatGPT反代"
                         v-model:value="chatConfig.apiForceUseReverse" />
                       <stting-check title="使用GPT-4" subTitle="使用GPT-4，注意试用配额较低，如果用不了就关掉"
@@ -589,6 +591,7 @@ export default {
         emojiBaseURL: 'https://www.gstatic.com/android/keyboard/emojikitchen',
         apiKey: '', //OpenAI API Key
         model: '',// OpenAI 模型
+        OpenAiPlatformRefreshToken: '',
         openAiBaseUrl: 'https://mondstadt.d201.eu.org/v1', //OpenAI API服务器地址
         openAiForceUseReverse: false, //强制使用OpenAI反代
         promptPrefixOverride: 'Your answer shouldn\'t be too verbose. Prefer to answer in Chinese.', //AI风格
