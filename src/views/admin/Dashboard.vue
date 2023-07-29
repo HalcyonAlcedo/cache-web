@@ -120,6 +120,7 @@ export default {
         { label: 'ChatGPT API3', value: 'api3' },
         { label: 'Slack Claude', value: 'claude' },
         { label: 'ChatGLM', value: 'chatglm' },
+        { label: '星火', value: 'xh' },
         { label: '浏览器', value: 'browser' },
       ]
     }

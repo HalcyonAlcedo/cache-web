@@ -29,6 +29,16 @@
           <stting-number title="对话保留时长" subTitle="每个人发起的对话保留时长。超过这个时长没有进行对话，再进行对话将开启新的对话。" min="0"
             v-model:value="chatConfig.conversationPreserveTime" />
           <stting-url title="代理服务器地址" subTitle="数据通过代理服务器发送，http或socks5代理。配置后需重启。" v-model:value="chatConfig.proxy" />
+          <stting-select title="对话模式" :selectClassData="[
+            { label: '必应', value: 'bing' },
+            { label: 'ChatGPT API', value: 'api' },
+            { label: 'ChatGPT API3', value: 'api3' },
+            { label: 'Slack Claude', value: 'claude' },
+            { label: 'ChatGLM', value: 'chatglm' },
+            { label: '星火', value: 'xh' },
+            { label: '浏览器', value: 'browser' },
+          ]" v-model:value="redisConfig.useMode" />
+          <stting-check title="新版帮助" subTitle="使用新版渲染的帮助页面替换yunzai版本帮助，如不习惯可关闭。" v-model:value="chatConfig.newhelp" />
         </div>
 
         <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
@@ -69,6 +79,8 @@
                         v-model:value="chatConfig.autoUsePictureThreshold" />
                       <stting-check title="长文本自动转图片" subTitle="字数大于阈值会自动用图片发送，即使是文本模式"
                         v-model:value="chatConfig.autoUsePicture" />
+                      <stting-check title="是否允许机器人真at" subTitle="开启后机器人的回复如果at群友会真的at"
+                        v-model:value="chatConfig.enableRobotAt" />
                     </div>
                   </div>
                   <div v-bind:class="{ 'hidden': chatpenTab !== 2, 'block': chatpenTab === 2 }">
@@ -102,6 +114,8 @@
                         v-model:value="chatConfig.live2dOption_positionY" />
                       <stting-number title="Live2D模型旋转" subTitle="Live2d模型在区域的旋转角度"
                         v-model:value="chatConfig.live2dOption_rotation" />
+                      <stting-number title="Live2D模型透明度" subTitle="Live2d模型的透明度"
+                        v-model:value="chatConfig.live2dOption_alpha" />
                       <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase w-full lg:w-12/12 px-4">
                         旧版本渲染设置
                       </h6>
@@ -139,11 +153,26 @@
                       <stting-number title="控制情感变化程度" min="0" max="1" v-model:value="chatConfig.noiseScale" />
                       <stting-number title="控制音素发音长度" min="0" max="1" v-model:value="chatConfig.noiseScaleW" />
                       <stting-number title="控制整体语速" min="0" max="2" v-model:value="chatConfig.lengthScale" />
+                      <stting-check title="vits模式日语输出"
+                        subTitle="使用vits语音时，将机器人的文字回复翻译成日文后获取语音。\n若想使用插件的翻译功能，发送'#chatgpt翻译帮助'查看使用方法，支持图片翻译，引用翻译..."
+                        v-model:value="chatConfig.autoJapanese" />
                       <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase w-full lg:w-12/12 px-4">
                         Azure
                       </h6>
                       <stting-passwd title="语音服务密钥" subTitle="Azure的语音服务密钥" v-model:value="chatConfig.azureTTSKey" />
                       <stting-text title="语音服务区域" subTitle="Azure语音服务区域" v-model:value="chatConfig.azureTTSRegion" />
+                      <stting-check title="Azure情绪多样化"
+                        subTitle="切换角色后使用'#chatgpt使用设定xxx/'重新开始对话以更新不同角色的情绪配置。支持使用不同的说话风格回复，各个角色支持说话风格详情：https://speech.microsoft.com/portal/voicegallery"
+                        v-model:value="chatConfig.azureTTSEmotion" />
+                      <stting-check title="Azure情绪纠正"
+                        subTitle="当机器人未使用或使用了不支持的说话风格时，将在对话中提醒机器人。注意：bing模式开启此项后有概率增大触发抱歉的机率，且不要单独开启此项"
+                        v-model:value="chatConfig.enhanceAzureTTSEmotion" />
+                      <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase w-full lg:w-12/12 px-4">
+                        Voicevox
+                      </h6>
+                      <stting-url title="voicevox语音转换API地址"
+                        subTitle="可使用https://2ndelement-voicevox.hf.space, 也可github搜索voicevox-engine自建"
+                        v-model:value="chatConfig.voicevoxSpace" />
                       <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase w-full lg:w-12/12 px-4">
                         云转码设置
                       </h6>
@@ -209,6 +238,13 @@
                   Slack Claude
                 </a>
               </li>
+              <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
+                  v-on:click="toggleTabs('modeopenTab', 7)"
+                  v-bind:class="{ 'text-gray-500 bg-white': modeopenTab !== 7, 'bg-purple-200': modeopenTab === 7 }">
+                  星火
+                </a>
+              </li>
             </ul>
             <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
               <div class="px-4 py-5 flex-auto">
@@ -220,6 +256,9 @@
                         v-model:value="chatConfig.openAiForceUseReverse" />
                       <stting-passwd title="OpenAI API Key" subTitle="OpenAI的ApiKey，用于访问OpenAI的API接口"
                         v-model:value="chatConfig.apiKey" />
+                      <stting-text title="OpenAI 模型"
+                        subTitle="gpt-4, gpt-4-0314, gpt-4-32k, gpt-4-32k-0314, gpt-3.5-turbo, gpt-3.5-turbo-0301。默认为gpt-3.5-turbo，gpt-4需账户支持"
+                        v-model:value="chatConfig.model" />
                       <stting-text title="AI名字" subTitle="AI认为的自己的名字，当你问他你是谁是他会回答这里的名字"
                         v-model:value="chatConfig.assistantLabel" />
                       <stting-number title="temperature" subTitle="用于控制回复内容的多样性，数值越大回复越加随机、多元化，数值越小回复越加保守" min="0" max="2"
@@ -251,8 +290,6 @@
                       <stting-textarea title="机器人读取聊天记录时的后台prompt" v-model:value="chatConfig.groupContextTip" />
                       <stting-check title="加强主人认知" subTitle="加强主人认知。希望机器人认清主人，避免NTR可开启。开启后可能会与自设定的内容有部分冲突。sydney模式可以放心开启"
                         v-model:value="chatConfig.enforceMaster" />
-                      <stting-check title="是否允许机器人真at" subTitle="开启后机器人的回复如果at群友会真的at"
-                        v-model:value="chatConfig.enableRobotAt" />
                       <stting-check title="Bing抱歉是否不计入聊天记录" subTitle="有时无限抱歉，就关掉这个再多问几次试试，可能有奇效"
                         v-model:value="chatConfig.sydneyApologyIgnored" />
                       <stting-check title="情感显示" subTitle="开启Sydney的情感显示，仅在图片模式下生效"
@@ -273,9 +310,10 @@
                       <stting-check title="对话使用sydney反代"
                         subTitle="【一般情况无需也不建议开启】默认情况下仅创建对话走反代，对话时仍然直连微软。开启本选项将使对话过程也走反，需反代支持"
                         v-model:value="chatConfig.sydneyWebsocketUseProxy" />
-                        <stting-url title="必应验证码pass服务"
-                        subTitle="必应出验证码会自动用该服务绕过"
+                      <stting-url title="必应验证码pass服务" subTitle="必应出验证码会自动用该服务绕过"
                         v-model:value="chatConfig.bingCaptchaOneShotUrl" />
+                      <stting-check title="允许生成图像等内容" subTitle="开启后类似网页版能够发图。但是此选项会占用大量token，自设定等模式下容易爆token"
+                        v-model:value="chatConfig.enableGenerateContents" />
                     </div>
                   </div>
                   <div v-bind:class="{ 'hidden': modeopenTab !== 3, 'block': modeopenTab === 3 }">
@@ -284,6 +322,8 @@
                       <stting-url title="ChatGPT API反代服务器地址" subTitle="ChatGPT的API反代服务器，用于绕过Cloudflare访问ChatGPT API"
                         v-model:value="chatConfig.api" />
                       <stting-url title="apiBaseUrl地址" v-model:value="chatConfig.apiBaseUrl" />
+                      <stting-passwd title="OpenAI refreshToken" subTitle="OpenAI的refreshToken，用于刷新Access Token"
+                        v-model:value="chatConfig.OpenAiPlatformRefreshToken" />
                       <stting-check title="强制使用ChatGPT反代" subTitle="即使配置了proxy，依然使用ChatGPT反代"
                         v-model:value="chatConfig.apiForceUseReverse" />
                       <stting-check title="使用GPT-4" subTitle="使用GPT-4，注意试用配额较低，如果用不了就关掉"
@@ -329,6 +369,13 @@
                         v-model:value="chatConfig.slackClaudeEnableGlobalPreset" />
                       <stting-textarea title="Slack全局设定" subTitle="若启用全局设定，每个人都会默认使用这里的设定"
                         v-model:value="chatConfig.slackClaudeGlobalPreset" />
+                    </div>
+                  </div>
+                  <div v-bind:class="{ 'hidden': modeopenTab !== 7, 'block': modeopenTab === 7 }">
+                    <!-- 星火 -->
+                    <div class="flex flex-wrap">
+                      <stting-url title="星火Cookie" subTitle="获取对话页面的ssoSessionId cookie。不要带等号和分号"
+                        v-model:value="chatConfig.xinghuoToken" />
                     </div>
                   </div>
                 </div>
@@ -480,6 +527,7 @@
           <stting-text title="系统服务访问域名" subTitle="使用域名代替公网ip，适用于有服务器和域名的朋友避免暴露ip使用"
             v-model:value="chatConfig.serverHost" />
           <stting-url title="云服务API地址" subTitle="目前支持node-silk语音转码，和云图片渲染" v-model:value="chatConfig.cloudTranscode" />
+          <stting-check title="允许群获取后台地址" subTitle="是否允许群获取后台地址，关闭后将只能私聊获取" v-model:value="chatConfig.groupAdminPage" />
         </div>
 
       </form>
@@ -543,6 +591,8 @@ export default {
         sydneyFirstMessageTimeout: 40000,
         emojiBaseURL: 'https://www.gstatic.com/android/keyboard/emojikitchen',
         apiKey: '', //OpenAI API Key
+        model: '',// OpenAI 模型
+        OpenAiPlatformRefreshToken: '',
         openAiBaseUrl: 'https://mondstadt.d201.eu.org/v1', //OpenAI API服务器地址
         openAiForceUseReverse: false, //强制使用OpenAI反代
         promptPrefixOverride: 'Your answer shouldn\'t be too verbose. Prefer to answer in Chinese.', //AI风格
@@ -563,7 +613,7 @@ export default {
         sydneyReverseProxy: 'https://666102.201666.xyz', //sydney反代
         sydneyForceUseReverse: false, //强制使用sydney反代
         sydneyWebsocketUseProxy: false, //对话使用sydney反代
-        sydneyWebsocketUseProxy: 'http://bingcaptcha.ikechan8370.com/bing', //必应验证码服务
+        bingCaptchaOneShotUrl: 'http://bingcaptcha.ikechan8370.com/bing', //必应验证码服务
         api: 'https://pimon.d201.cn/backend-api/conversation', //ChatGPT API反代服务器地址
         apiBaseUrl: 'https://pimon.d201.cn/backend-api', //apiBaseUrl地址
         apiForceUseReverse: false, //强制使用ChatGPT反代
@@ -578,7 +628,8 @@ export default {
         helloPrompt: '写一段话让大家来找我聊天。类似于“有人找我聊天吗？"这种风格，轻松随意一点控制在20个字以内', //打招呼prompt
         helloInterval: 3, //打招呼间隔(小时)
         helloProbability: 50, //打招呼的触发概率(%)
-        oldview: false, //预览版本
+        oldview: false, //旧版本渲染
+        newhelp: false, //新版本帮助
         serverPort: 3321, //系统Api服务端口
         serverHost: '', //系统服务访问域名
         viewHost: '', //渲染服务器地址
@@ -590,6 +641,7 @@ export default {
         live2dOption_positionX: 0, //live2d模型配置
         live2dOption_positionY: 0, //live2d模型配置
         live2dOption_rotation: 0, //live2d模型配置
+        live2dOption_alpha: 1, //live2d模型配置
         slackUserToken: '', //Slack用户Token
         slackBotUserToken: '', //Slack Bot Token
         slackClaudeUserId: '', //Slack成员id
@@ -599,11 +651,20 @@ export default {
         cloudTranscode: '', //云转码API
         cloudMode: 'url', //云转码模式
         cloudRender: false, //云渲染
-        cloudDPR: 1,
+        cloudDPR: 1, //云渲染DPR
+        azureTTSEmotion: false, //Azure情绪多样化
+        enhanceAzureTTSEmotion: false, //Azure情绪纠正
+        voicevoxSpace: '', //voicevox语音转换API地址
+        voicevoxTTSSpeaker: '护士机器子T', //VoiceVox默认角色
+        autoJapanese: false, //vits模式日语输出
+        groupAdminPage: false, //允许群获取后台地址
+        xinghuoToken: '', //星火Cookie
+        enableGenerateContents: false, //允许生成图像等内容
       },
       redisConfig: {
         bingTokens: [],
         turnConfirm: true,
+        useMode: '',
       },
       modeopenTab: 1,
       chatpenTab: 1,

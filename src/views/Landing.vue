@@ -108,7 +108,7 @@
         </div>
       </section>
     </main>
-    <card-live2d :cubismData="live2d" />
+    <card-live2d v-if="live2d" :cubismData="live2d" />
     <footer-small />
   </div>
 </template>
@@ -145,7 +145,8 @@ export default {
             x: 0,
             y: 0
           },
-          rotation: 0
+          rotation: 0,
+          alpha: 1
         }
       }
     }
@@ -189,6 +190,10 @@ export default {
               mood: response.data.mood,
               option: response.data.live2dOption
             }
+          } else {
+            // 防止live2d加载失败导致的渲染卡死
+            window.Live2d = true
+            this.live2d = false
           }
         })
         .catch((err) => { // 请求失败处理
