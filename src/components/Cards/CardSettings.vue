@@ -273,6 +273,9 @@
                       <stting-check title="对话使用sydney反代"
                         subTitle="【一般情况无需也不建议开启】默认情况下仅创建对话走反代，对话时仍然直连微软。开启本选项将使对话过程也走反，需反代支持"
                         v-model:value="chatConfig.sydneyWebsocketUseProxy" />
+                        <stting-url title="必应验证码pass服务"
+                        subTitle="必应出验证码会自动用该服务绕过"
+                        v-model:value="chatConfig.bingCaptchaOneShotUrl" />
                     </div>
                   </div>
                   <div v-bind:class="{ 'hidden': modeopenTab !== 3, 'block': modeopenTab === 3 }">
@@ -560,6 +563,7 @@ export default {
         sydneyReverseProxy: 'https://666102.201666.xyz', //sydney反代
         sydneyForceUseReverse: false, //强制使用sydney反代
         sydneyWebsocketUseProxy: false, //对话使用sydney反代
+        sydneyWebsocketUseProxy: 'http://bingcaptcha.ikechan8370.com/bing', //必应验证码服务
         api: 'https://pimon.d201.cn/backend-api/conversation', //ChatGPT API反代服务器地址
         apiBaseUrl: 'https://pimon.d201.cn/backend-api', //apiBaseUrl地址
         apiForceUseReverse: false, //强制使用ChatGPT反代
